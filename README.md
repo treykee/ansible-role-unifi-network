@@ -8,7 +8,7 @@ Installs Ubiquiti UniFi Controller software from source on RHEL/CentOS
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
@@ -31,7 +31,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: treykee.unifi-controller }
+         - { role: treykee.ansible-role-unifi-controller }
 
 License
 -------
