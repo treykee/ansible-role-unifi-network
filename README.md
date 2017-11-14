@@ -1,4 +1,4 @@
-Role Name
+Ansible Role: UniFi Controller
 =========
 
 Installs Ubiquiti UniFi Controller software from source on RHEL/CentOS
