@@ -5,6 +5,7 @@
   selinux:
     policy: targeted
     state: permissive
+  when: ansible_selinux == "true"
 - name: install EPEL repository
   yum:
     name: epel-release
