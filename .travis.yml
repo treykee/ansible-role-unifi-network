@@ -1,31 +1,20 @@
 ---
-language: python
-python: "2.7"
+services: docker
 
-before_install:
-  # Make sure everything's up to date.
-  - sudo yum update -y
-
-install:
-  # Install Ansible.
-  - pip install ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
-
+env:
+  - distro: centos7
+  
 script:
-  # Check the role/playbook's syntax.
-  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  # Configure test script so we can run extra tests after playbook is run.
+  - export container_id=$(date +%s)
+  - export cleanup=false
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
 
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # Run tests.
+  - ${PWD}/tests/test.sh
 
-  # Request UniFi Controller login page via the web server, to make sure it's running and responds.
-  - "curl https://localhost:8443/manage/account/login"
+  # Check if UniFi Controller is reachable.
+  - 'docker exec --tty ${container_id} env TERM=xterm curl https://127.0.0.1:8443/manage/account/login'
