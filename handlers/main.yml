@@ -1,0 +1,7 @@
+---
+# handlers file for unifi-controller
+
+- name: restart firewalld
+  service:
+    name: firewalld
+    state: restarted

@@ -1,0 +1,5 @@
+---
+# defaults file for unifi-controller
+
+unifi_controller_version: 5.6.22
+unifi_controller_java_version: 1.8.0

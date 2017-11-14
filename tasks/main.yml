@@ -1,0 +1,60 @@
+---
+# tasks file for unifi-controller
+
+- name: set SELinux to permissive mode
+  selinux:
+    policy: targeted
+    state: permissive
+- name: install EPEL repository
+  yum:
+    name: epel-release
+    state: latest
+- name: create service account
+  user:
+    name: ubnt
+    system: yes
+- name: install prerequisite packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - mongodb-server
+    - java-"{{ unifi_controller_java_version }}-openjdk"
+    - unzip
+    - wget
+  ignore_errors: "{{ ansible_check_mode }}"
+- name: Fetch and unarchive UniFi Controller source
+  unarchive:
+    creates: /opt/UniFi
+    src: "http://dl.ubnt.com/unifi/{{ unifi_controller_version }}/UniFi.unix.zip"
+    dest: /opt
+    remote_src: yes
+    owner: ubnt
+    group: ubnt
+- name: copy systemd startup script
+  copy:
+    src: "{{ role_path }}/files/unifi.service"
+    dest: /etc/systemd/system/unifi.service
+    mode: 0744
+- name: stop firewalld
+  systemd:
+    name: firewalld.service
+    state: stopped
+- name: copy UniFi Controller firewalld config
+  copy:
+    src: "{{ role_path }}/files/unifi.xml"
+    dest: /etc/firewalld/services/unifi.xml
+    mode: 0744
+- name: restart firewalld and allow UniFi Controller traffic
+  firewalld:
+    service: unifi
+    permanent: true
+    immediate: true
+    zone: home
+    state: enabled
+  ignore_errors: "{{ ansible_check_mode }}"
+- name: enable UniFi Controller system service
+  systemd:
+    name: unifi.service
+    enabled: yes
+    state: started

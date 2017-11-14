@@ -1,0 +1,19 @@
+#
+# Systemd unit file for UniFi Controller
+#
+
+[Unit]
+Description=UniFi Controller
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=ubnt
+WorkingDirectory=/opt/UniFi
+ExecStart=/usr/bin/java -Xmx1024M -jar /opt/UniFi/lib/ace.jar start
+ExecStop=/usr/bin/java -jar /opt/UniFi/lib/ace.jar stop
+SuccessExitStatus=143
+
+
+[Install]
+WantedBy=multi-user.target
