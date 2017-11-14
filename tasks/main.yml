@@ -20,7 +20,7 @@
     state: latest
   with_items:
     - mongodb-server
-    - java-"{{ unifi_controller_java_version }}-openjdk"
+    - "java-{{ unifi_controller_java_version }}-openjdk"
     - unzip
     - wget
   ignore_errors: "{{ ansible_check_mode }}"
