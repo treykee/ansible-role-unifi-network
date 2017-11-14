@@ -1,5 +1,11 @@
 ---
-- hosts: localhost
+- hosts: all
   remote_user: root
+  pre_tasks:
+    - name: install required Ansible module dependencies
+      yum:
+        name: libselinux-python
+        state: latest
+      
   roles:
     - role_under_test
