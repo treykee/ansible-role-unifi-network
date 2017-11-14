@@ -1,6 +1,8 @@
 Ansible Role: UniFi Controller
 =========
 
+[![Build Status](https://travis-ci.org/treykee/ansible-role-unifi-controller.svg?branch=master)](https://travis-ci.org/treykee/ansible-role-unifi-controller)
+
 Installs Ubiquiti UniFi Controller software from source on RHEL/CentOS
 
 Requirements
