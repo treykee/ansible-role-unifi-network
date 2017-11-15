@@ -44,16 +44,13 @@
   stat:
     path: /etc/sysconfig/firewalld
   register: firewalld_status
-#- name: stop firewalld
-#  systemd:
-#    name: firewalld.service
-#    state: stopped
 - name: copy UniFi Controller firewalld config
   copy:
     src: "{{ role_path }}/files/unifi.xml"
     dest: /etc/firewalld/services/unifi.xml
     mode: 0744
   when: firewalld_status.stat.exists
+  notify: reload firewalld
 - name: restart firewalld and allow UniFi Controller traffic
   firewalld:
     service: unifi

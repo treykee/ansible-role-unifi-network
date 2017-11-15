@@ -2,6 +2,11 @@
 # handlers file for unifi-controller
 
 - name: restart firewalld
-  service:
+  systemd:
     name: firewalld
     state: restarted
+
+- name: reload firewalld
+  systemd:
+    name: firewalld
+    state: reloaded
