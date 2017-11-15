@@ -17,4 +17,4 @@ script:
   - ${PWD}/tests/test.sh
 
   # Check if UniFi Controller is reachable.
-  - 'docker exec --tty ${container_id} env TERM=xterm curl https://127.0.0.1:8443/manage/account/login'
+  - 'docker exec --tty ${container_id} env TERM=xterm curl -k https://127.0.0.1:8443/manage/account/login'
