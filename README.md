@@ -19,7 +19,8 @@ Set the version of the UniFi controller to be installed.
 
 unifi_controller_java_version: 1.8.0
 
-Set the version of Java required to support the version of the UniFi Controller specificed. This should only be changed when the default version of Java specified in the role defaults no longer meets the package requirements.
+Set the version of Java required to support the version of the UniFi Controller specificed.
+**Note**: This should only be changed when the version of Java specified in the role defaults no longer meets the package requirements.
 
 Dependencies
 ------------
