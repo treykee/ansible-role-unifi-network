@@ -10,11 +10,14 @@ script:
   - export cleanup=false
 
   # Download test shim.
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
+  #- wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  #- chmod +x ${PWD}/tests/test.sh
+  - wget -O ./tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ./tests/test.sh
 
   # Run tests.
-  - ${PWD}/tests/test.sh
+  # ${PWD}/tests/test.sh
+  ./tests/test.sh
 
   # Check if UniFi Controller is reachable.
   - 'docker exec --tty ${container_id} env TERM=xterm curl -k https://127.0.0.1:8443/manage/account/login'
