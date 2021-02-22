@@ -1,45 +1,40 @@
-Ansible Role: UniFi Controller
-=========
+# Ansible Role: UniFi Controller
 
 [![Build Status](https://travis-ci.org/treykee/ansible-role-unifi-controller.svg?branch=master)](https://travis-ci.org/treykee/ansible-role-unifi-controller)
 
-Installs Ubiquiti UniFi Controller software from source on RHEL/CentOS
+Installs Ubiquiti UniFi Controller software on RHEL/CentOS Debian/Ubuntu.
 
-Requirements
-------------
+## Requirements
 
 None.
 
-Role Variables
---------------
+## Role Variables
 
-unifi_controller_version: 5.6.22
+Available variables are listed below. For default values see `defaults/main.yml`:
+
+    unifi_controller_version: ""
 
 Set the version of the UniFi controller to be installed.
 
-unifi_controller_java_version: 1.8.0
+    unifi_controller_java_version: ""
 
 Set the version of Java required to support the version of the UniFi Controller specificed.
 **Note**: This should only be changed when the version of Java specified in the role defaults no longer meets the package requirements.
 
-Dependencies
-------------
+## Dependencies
 
 None
 
-Example Playbook
-----------------
+## Example Playbook
 
     - hosts: servers
       roles:
          - { role: treykee.ansible-role-unifi-controller }
 
-License
--------
+## License
 
 MIT / BSD
 
-Author Information
-------------------
+## Author Information
 
 This role was created in 2017 by [Trey Keenon] (<https://www.treykee.me/>)
