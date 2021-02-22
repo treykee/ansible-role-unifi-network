@@ -10,3 +10,8 @@
   systemd:
     name: firewalld
     state: reloaded
+
+- name: restart unifi controller
+  systemd:
+    name: unifi
+    state: restarted
