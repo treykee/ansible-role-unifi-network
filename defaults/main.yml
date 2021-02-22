@@ -1,5 +1,7 @@
 ---
 # defaults file for unifi-controller
 
-unifi_controller_version: 5.6.22
+unifi_controller_version: 6.0.45
 unifi_controller_java_version: 1.8.0
+unifi_base: /opt/unifi
+unifi_base_data: /var/opt/unifi
