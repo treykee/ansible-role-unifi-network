@@ -1,0 +1,19 @@
+# Ignore everything
+*
+# But descend into directories
+!*/
+# These specifically belong in source
+!/defaults/**
+!/files/**
+!/handlers/**
+!/meta/**
+!/molecule/**
+!/tasks/**
+!/tests/**
+!/.editorconfig
+~/.gitattributes
+!/.gitignore
+!/.travis.yml
+!/LICENSE
+!/README.md
+/venv/**
