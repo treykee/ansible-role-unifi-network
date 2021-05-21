@@ -1,0 +1,21 @@
+---
+- name: Install EPEL repository
+  ansible.builtin.yum:
+    name: epel-release
+    state: present
+
+- name: Install MongoDB repository
+  ansible.builtin.yum_repository:
+    name: mongodb-org-4.4
+    description: MongoDB Repository
+    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/x86_64/
+    gpgcheck: true
+    enabled: true
+    gpgkey: https://www.mongodb.org/static/pgp/server-4.4.asc
+
+- name: install prerequisite packages
+  ansible.builtin.yum:
+    name: "{{ redhat_packages }}"
+    enablerepo: epel
+    state: present
+  ignore_errors: "{{ ansible_check_mode }}"
