@@ -2,16 +2,16 @@
 # handlers file for unifi-controller
 
 - name: restart firewalld
-  systemd:
+  ansible.builtin.systemd:
     name: firewalld
     state: restarted
 
 - name: reload firewalld
-  systemd:
+  ansible.builtin.systemd:
     name: firewalld
     state: reloaded
 
 - name: restart unifi controller
-  systemd:
+  ansible.builtin.systemd:
     name: unifi
     state: restarted
