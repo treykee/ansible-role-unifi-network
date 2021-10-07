@@ -1,7 +1,10 @@
 ---
 # defaults file for unifi-controller
 
-unifi_controller_version: 6.0.45
+unifi_controller_version: 6.4.54
 unifi_controller_java_version: 1.8.0
-unifi_base: /opt/unifi
-unifi_base_data: /var/opt/unifi
+unifi_controller_src_url: "http://dl.ubnt.com/unifi/{{ unifi_controller_version }}/UniFi.unix.zip"
+unifi_controller_install_path: "/opt/unifi-{{ unifi_controller_version }}"
+unifi_controller_data_path: "/var/opt/UniFi/data"
+unifi_controller_vanity_install_path: "/opt/UniFi"
+unifi_controller_working_data_path: "{{ unifi_controller_install_path }}/data"
