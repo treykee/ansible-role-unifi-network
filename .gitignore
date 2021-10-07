@@ -10,9 +10,12 @@
 !/molecule/**
 !/tasks/**
 !/tests/**
+!/vars/**
+!/venv/requirements.txt
 !/.editorconfig
 ~/.gitattributes
 !/.gitignore
+!/.prettierrc
 !/.travis.yml
 !/LICENSE
 !/README.md
