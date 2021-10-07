@@ -12,11 +12,15 @@ None.
 
 Available variables are listed below. For default values see `defaults/main.yml`:
 
-    unifi_controller_version: ""
+```yaml
+unifi_controller_version: ""
+```
 
 Set the version of the UniFi controller to be installed.
 
-    unifi_controller_java_version: ""
+```yaml
+unifi_controller_java_version: ""
+```
 
 Set the version of Java required to support the version of the UniFi Controller specificed.
 **Note**: This should only be changed when the version of Java specified in the role defaults no longer meets the package requirements.
@@ -27,9 +31,11 @@ None
 
 ## Example Playbook
 
-    - hosts: servers
-      roles:
-         - { role: treykee.ansible-role-unifi-controller }
+```yaml
+- hosts: servers
+  roles:
+    - treykee.ansible-role-unifi-controller
+```
 
 ## License
 
