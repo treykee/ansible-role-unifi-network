@@ -1,40 +1,32 @@
 ---
 # tasks file for unifi-controller
 - name: Include OS-specific variables
-  ansible.builtin.include_vars: '{{ ansible_os_family }}.yml'
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
 # Setup/install tasks.
+- name: Include pre-tasks
+  include_tasks: "pre-tasks.yml"
+
 - name: Include OS-specific setup tasks
-  include_tasks: 'setup-{{ ansible_os_family }}.yml'
-
-- name: Check if SELinux is available
-  ansible.builtin.stat:
-    path: /etc/sysconfig/selinux
-  register: _selinux_status
-
-- name: Set SELinux to permissive mode
-  ansible.posix.selinux:
-    policy: targeted
-    state: permissive
-  when: _selinux_status.stat.exists
+  include_tasks: "setup-{{ ansible_os_family }}.yml"
 
 - name: Create service account
   ansible.builtin.user:
     name: ubnt
     system: yes
 
-- name: Fetch and unarchive UniFi Controller source
-  ansible.builtin.unarchive:
-    creates: /opt/UniFi
-    src: "http://dl.ubnt.com/unifi/{{ unifi_controller_version }}/UniFi.unix.zip"
-    dest: /opt
-    remote_src: yes
-    owner: ubnt
-    group: ubnt
+- name: Create temp working directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: "-unifi"
+  register: _temp_dir_raw
+
+- name: Include UniFi Controller install tasks
+  include_tasks: "install-unifi-controller.yml"
 
 - name: Copy systemd startup script
   ansible.builtin.copy:
-    src: "{{ role_path }}/files/unifi.service"
+    src: '{{ role_path }}/files/unifi.service'
     dest: /etc/systemd/system/unifi.service
     mode: 0744
 
@@ -44,12 +36,14 @@
   register: _firewalld_status
 
 - name: Copy UniFi Controller firewalld config
+  vars:
+    target_state: reload
   ansible.builtin.copy:
-    src: "{{ role_path }}/files/unifi.xml"
+    src: '{{ role_path }}/files/unifi.xml'
     dest: /etc/firewalld/services/unifi.xml
     mode: 0744
   when: _firewalld_status.stat.exists
-  notify: reload firewalld
+  notify: update firewalld
 
 - name: Restart firewalld and allow UniFi Controller traffic
   ansible.posix.firewalld:
@@ -59,7 +53,7 @@
     zone: home
     state: enabled
   when: _firewalld_status.stat.exists
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: '{{ ansible_check_mode }}'
 
 - name: Enable UniFi Controller system service
   ansible.builtin.systemd:

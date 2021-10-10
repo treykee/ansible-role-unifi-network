@@ -8,10 +8,10 @@
   ansible.builtin.yum_repository:
     name: mongodb-org-4.4
     description: MongoDB Repository
-    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/x86_64/
+    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/x86_64/"
     gpgcheck: true
     enabled: true
-    gpgkey: https://www.mongodb.org/static/pgp/server-4.4.asc
+    gpgkey: "https://www.mongodb.org/static/pgp/server-4.4.asc"
 
 - name: install prerequisite packages
   ansible.builtin.yum:

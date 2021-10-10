@@ -1,0 +1,28 @@
+---
+- name: Check if SELinux is available
+  ansible.builtin.stat:
+    path: /etc/sysconfig/selinux
+  register: _selinux_status
+
+- name: Set SELinux to permissive mode
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
+  when: _selinux_status.stat.exists
+
+- name: stat paths
+  ansible.builtin.stat:
+    path: "{{ path }}"
+  loop:
+    - "{{ unifi_controller_install_path }}"
+    - "{{unifi_controller_data_path}}"
+    - "{{unifi_controller_vanity_install_path}}"
+    - "{{unifi_controller_working_data_path}}"
+  loop_control:
+    loop_var: path
+  register: _path_stat_raw
+
+- name: Debug '_path_stat_raw'
+  ansible.builtin.debug:
+    var: _path_stat_raw
+    verbosity: 3
