@@ -1,7 +1,8 @@
 ---
 - name: Install EPEL repository
   ansible.builtin.yum:
-    name: epel-release
+    disable_gpg_check: true
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
     state: present
 
 - name: Install MongoDB repository
