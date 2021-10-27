@@ -1,8 +1,11 @@
-quoteProps: "as-needed"
+quoteProps: "consistent"
 trailingComma: "es5"
+bracketSpacing: true
+printWidth: 80
 tabWidth: 2
 semi: false
 singleQuote: false
+endOfLine: lf
 overrides:
   - files: ".prettierrc"
     options:
