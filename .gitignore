@@ -3,6 +3,7 @@
 # But descend into directories
 !*/
 # These specifically belong in source
+!/.github/**
 !/defaults/**
 !/files/**
 !/handlers/**
@@ -17,6 +18,7 @@
 !/.gitignore
 !/.prettierrc
 !/.travis.yml
+!/.yamllint
 !/LICENSE
 !/README.md
 /venv/**
