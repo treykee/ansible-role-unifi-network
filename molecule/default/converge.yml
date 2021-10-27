@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include ansible-role-unifi-controller"
-      include_role:
-        name: "ansible-role-unifi-controller"
+
+  roles:
+    - role: treykee.unifi_controller
