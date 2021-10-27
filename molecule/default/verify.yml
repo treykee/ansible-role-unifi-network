@@ -5,6 +5,12 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+  - name: Check that UniFi Controller is running
+    uri:
+      url: https://127.0.0.1:8443/manage/account/login
+      status_code: 200
+      validate_certs: false
+    register: result
+    until: result.status == 200
+    retries: 60
+    delay: 1
