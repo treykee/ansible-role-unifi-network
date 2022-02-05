@@ -2,5 +2,5 @@
 - name: Enable UniFi Controller system service
   ansible.builtin.systemd:
     name: unifi.service
-    enabled: yes
+    enabled: true
     state: started

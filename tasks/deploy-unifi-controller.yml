@@ -11,7 +11,7 @@
   ansible.builtin.copy:
     src: "{{ _temp_dir_raw.path }}/UniFi/"
     dest: "/opt/unifi-{{ unifi_controller_version }}"
-    remote_src: yes
+    remote_src: true
     owner: ubnt
     group: ubnt
     mode: preserve
