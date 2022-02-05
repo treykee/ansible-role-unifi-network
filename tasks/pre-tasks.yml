@@ -1,5 +1,68 @@
 ---
-- name: Check if SELinux is available
+- name: Resolve UniFi Controller install state
+  block:
+  - name: Populate service facts
+    ansible.builtin.service_facts:
+
+  - name: Debug 'ansible_facts.services'
+    ansible.builtin.debug:
+      var: ansible_facts.services
+      verbosity: 3
+  
+  - name: Assert service status
+    ansible.builtin.set_fact:
+      service_exists: "{{ (ansible_facts.services is search('unifi')) | ternary ('true', 'false') }}"
+
+  - name: Debug 'service_exists'
+    ansible.builtin.debug:
+      var: service_exists
+      verbosity: 3
+
+- name: Stop UniFi Controller service
+  ansible.builtin.systemd:
+    name: unifi.service
+    state: stopped
+  when: service_exists is true
+
+- name: Unlink working data directory
+  ansible.builtin.file:
+    path: "{{ unifi_controller_working_data_path }}"
+    state: absent
+  when: unifi_controller_working_data_path is link
+
+- name: Unlink vanity install directory
+  ansible.builtin.file:
+    path: "{{ unifi_controller_vanity_install_path }}"
+    state: absent
+  when: unifi_controller_vanity_install_path is link
+
+- name: Create service account
+  ansible.builtin.user:
+    name: ubnt
+    system: yes
+
+- name: Create temp working directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: "-unifi"
+  register: _temp_dir_raw
+
+- name: Fetch and unarchive UniFi Controller source
+  ansible.builtin.unarchive:
+    src: "{{ unifi_controller_src_url }}"
+    dest: "{{ _temp_dir_raw.path }}"
+    remote_src: yes
+    owner: ubnt
+    group: ubnt
+
+- name: Copy systemd startup script
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/unifi.service"
+    dest: "/etc/systemd/system/unifi.service"
+    mode: 0744
+  when: service_exists is false
+
+- name: Get SELinux status
   ansible.builtin.stat:
     path: /etc/sysconfig/selinux
   register: _selinux_status
@@ -10,19 +73,7 @@
     state: permissive
   when: _selinux_status.stat.exists
 
-- name: stat paths
+- name: Get firewalld status
   ansible.builtin.stat:
-    path: "{{ path }}"
-  loop:
-    - "{{ unifi_controller_install_path }}"
-    - "{{unifi_controller_data_path}}"
-    - "{{unifi_controller_vanity_install_path}}"
-    - "{{unifi_controller_working_data_path}}"
-  loop_control:
-    loop_var: path
-  register: _path_stat_raw
-
-- name: Debug '_path_stat_raw'
-  ansible.builtin.debug:
-    var: _path_stat_raw
-    verbosity: 3
+    path: /etc/sysconfig/firewalld
+  register: _firewalld_status
