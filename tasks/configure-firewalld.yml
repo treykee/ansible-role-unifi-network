@@ -1,3 +1,4 @@
+---
 - name: Copy UniFi Controller firewalld config
   vars:
     target_state: reload

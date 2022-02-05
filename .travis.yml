@@ -3,7 +3,7 @@ services: docker
 
 env:
   - distro: centos7
-  
+
 script:
   # Configure test script so we can run extra tests after playbook is run.
   - export container_id=$(date +%s)
@@ -20,4 +20,4 @@ script:
   - ./tests/test.sh
 
   # Check if UniFi Controller is reachable.
-  - 'docker exec --tty ${container_id} env TERM=xterm curl -k https://127.0.0.1:8443/manage/account/login'
+  - "docker exec --tty ${container_id} env TERM=xterm curl -k https://127.0.0.1:8443/manage/account/login"

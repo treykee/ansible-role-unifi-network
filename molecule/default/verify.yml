@@ -5,6 +5,6 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: This is a shim 
-    assert:
-      that: true
+    - name: This is a shim
+      assert:
+        that: true

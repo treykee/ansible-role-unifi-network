@@ -32,4 +32,4 @@ scenario:
     - converge
     - idempotence
     - verify
-    - destroy  
+    - destroy

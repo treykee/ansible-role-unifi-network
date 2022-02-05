@@ -39,7 +39,7 @@
 - name: Create service account
   ansible.builtin.user:
     name: ubnt
-    system: yes
+    system: true
 
 - name: Create temp working directory
   ansible.builtin.tempfile:
@@ -51,7 +51,7 @@
   ansible.builtin.unarchive:
     src: "{{ unifi_controller_src_url }}"
     dest: "{{ _temp_dir_raw.path }}"
-    remote_src: yes
+    remote_src: true
     owner: ubnt
     group: ubnt
 
