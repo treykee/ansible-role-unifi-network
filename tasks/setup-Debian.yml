@@ -1,1 +1,18 @@
 ---
+- name: Import the public key used by the package management system
+  ansible.builtin.apt_key:
+    url: "{{ mongodb_pgp_key_url }}"
+    state: present
+
+- name: Add MongoDB apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/4.4 multiverse
+    state: present
+    filename: mongodb-org-4.4
+
+- name: Install prerequisite packages
+  ansible.builtin.apt:
+    name: "{{ debian_packages }}"
+    state: present
+  ignore_errors: "{{ ansible_check_mode }}"
+...
