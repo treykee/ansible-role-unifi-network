@@ -1,22 +1,22 @@
 ---
 - name: Resolve UniFi Controller install state
   block:
-  - name: Populate service facts
-    ansible.builtin.service_facts:
+    - name: Populate service facts
+      ansible.builtin.service_facts:
 
-  - name: Debug 'ansible_facts.services'
-    ansible.builtin.debug:
-      var: ansible_facts.services
-      verbosity: 3
-  
-  - name: Assert service status
-    ansible.builtin.set_fact:
-      service_exists: "{{ (ansible_facts.services is search('unifi')) | ternary ('true', 'false') }}"
+    - name: Debug 'ansible_facts.services'
+      ansible.builtin.debug:
+        var: ansible_facts.services
+        verbosity: 3
 
-  - name: Debug 'service_exists'
-    ansible.builtin.debug:
-      var: service_exists
-      verbosity: 3
+    - name: Assert service status
+      ansible.builtin.set_fact:
+        service_exists: "{{ (ansible_facts.services is search('unifi')) | ternary ('true', 'false') }}"
+
+    - name: Debug 'service_exists'
+      ansible.builtin.debug:
+        var: service_exists
+        verbosity: 3
 
 - name: Stop UniFi Controller service
   ansible.builtin.systemd:

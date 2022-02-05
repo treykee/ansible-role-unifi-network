@@ -2,7 +2,7 @@
   vars:
     target_state: reload
   ansible.builtin.copy:
-    src: '{{ role_path }}/files/unifi.xml'
+    src: "{{ role_path }}/files/unifi.xml"
     dest: /etc/firewalld/services/unifi.xml
     mode: 0744
   notify: update firewalld
@@ -14,4 +14,4 @@
     immediate: true
     zone: home
     state: enabled
-  ignore_errors: '{{ ansible_check_mode }}'
+  ignore_errors: "{{ ansible_check_mode }}"

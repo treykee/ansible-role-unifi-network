@@ -4,4 +4,3 @@
     name: unifi.service
     enabled: yes
     state: started
-...

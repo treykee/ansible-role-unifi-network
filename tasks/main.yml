@@ -17,4 +17,3 @@
 
 - name: include post-tasks
   include_tasks: "post-tasks.yml"
-...
