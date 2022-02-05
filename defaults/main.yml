@@ -8,4 +8,5 @@ unifi_controller_install_path: /opt/unifi-{{ unifi_controller_version }}
 unifi_controller_data_path: /var/opt/UniFi/data
 unifi_controller_vanity_install_path: /opt/UniFi
 unifi_controller_working_data_path: "{{ unifi_controller_install_path }}/data"
+mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-4.4.asc
 ...
