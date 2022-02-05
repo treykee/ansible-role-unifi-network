@@ -1,0 +1,39 @@
+---
+- name: Create 'data' directory
+  ansible.builtin.file:
+    path: "/var/opt/UniFi/data"
+    state: directory
+    mode: 0755
+    owner: ubnt
+    group: ubnt
+
+- name: Copy application directory to '/opt'
+  ansible.builtin.copy:
+    src: "{{ _temp_dir_raw.path }}/UniFi/"
+    dest: "/opt/unifi-{{ unifi_controller_version }}"
+    remote_src: yes
+    owner: ubnt
+    group: ubnt
+    mode: preserve
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: "{{ _temp_dir_raw.path }}"
+    state: absent
+
+- name: Symlink versioned install path to vanity path
+  ansible.builtin.file:
+    src: "{{ unifi_controller_install_path }}"
+    dest: "{{ unifi_controller_vanity_install_path }}"
+    owner: ubnt
+    group: ubnt
+    state: link
+
+- name: Symlink data directory to install data path
+  ansible.builtin.file:
+    src: "{{ unifi_controller_data_path }}"
+    dest: "{{ unifi_controller_vanity_install_path }}/data"
+    owner: ubnt
+    group: ubnt
+    state: link
+...
