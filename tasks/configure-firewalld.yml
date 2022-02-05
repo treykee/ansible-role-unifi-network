@@ -1,0 +1,17 @@
+- name: Copy UniFi Controller firewalld config
+  vars:
+    target_state: reload
+  ansible.builtin.copy:
+    src: '{{ role_path }}/files/unifi.xml'
+    dest: /etc/firewalld/services/unifi.xml
+    mode: 0744
+  notify: update firewalld
+
+- name: Restart firewalld and allow UniFi Controller traffic
+  ansible.posix.firewalld:
+    service: unifi
+    permanent: true
+    immediate: true
+    zone: home
+    state: enabled
+  ignore_errors: '{{ ansible_check_mode }}'
