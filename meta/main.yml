@@ -3,7 +3,7 @@ galaxy_info:
   role_name: unifi_controller
   namespace: treykee
   author: Trey Keenon
-  description: Ubiquiti UniFi Controller for Debian/Ubuntu
+  description: Ubiquiti UniFi Controller
   company: ""
 
   license: MIT
