@@ -27,7 +27,9 @@ rules:
   indentation: enable
   key-duplicates: enable
   key-ordering: disable
-  line-length: enable
+  line-length:
+    level: warning
+    max: 120
   new-line-at-end-of-file: enable
   new-lines: enable
   octal-values: disable
