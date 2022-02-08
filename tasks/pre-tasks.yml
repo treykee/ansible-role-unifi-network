@@ -28,11 +28,11 @@
         - "{{ unifi_controller_working_data_path }}"
       loop_control:
         loop_var: path
-      register: _path_info_raw
+      register: _path_info
 
-    - name: Debug '_path_info_raw'
+    - name: Debug '_path_info'
       ansible.builtin.debug:
-        var: _path_info_raw
+        var: _path_info
         verbosity: 3
 
 - name: Stop UniFi Controller service
@@ -65,12 +65,12 @@
   ansible.builtin.tempfile:
     state: directory
     suffix: "-unifi"
-  register: _temp_dir_raw
+  register: _temp_dir
 
 - name: Fetch and unarchive UniFi Controller source
   ansible.builtin.unarchive:
     src: "{{ unifi_controller_src_url }}"
-    dest: "{{ _temp_dir_raw.path }}"
+    dest: "{{ _temp_dir.path }}"
     remote_src: true
     owner: ubnt
     group: ubnt
@@ -86,6 +86,11 @@
   ansible.builtin.stat:
     path: /etc/sysconfig/selinux
   register: _selinux_status
+
+- name: Debug '_selinux_status'
+  ansible.builtin.debug:
+    var: _selinux_status
+    verbosity: 3
 
 - name: Set SELinux to permissive mode
   when: _selinux_status.stat.exists
