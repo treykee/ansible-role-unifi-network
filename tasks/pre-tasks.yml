@@ -34,24 +34,27 @@
       ansible.builtin.debug:
         var: _path_info_raw
         verbosity: 3
-        
+
 - name: Stop UniFi Controller service
+  when: service_exists is true
   ansible.builtin.systemd:
     name: unifi.service
     state: stopped
-  when: service_exists is true
+
 
 - name: Unlink working data directory
+  when: unifi_controller_working_data_path is link
   ansible.builtin.file:
     path: "{{ unifi_controller_working_data_path }}"
     state: absent
-  when: unifi_controller_working_data_path is link
+
 
 - name: Unlink vanity install directory
+  when: unifi_controller_vanity_install_path is link
   ansible.builtin.file:
     path: "{{ unifi_controller_vanity_install_path }}"
     state: absent
-  when: unifi_controller_vanity_install_path is link
+
 
 - name: Create service account
   ansible.builtin.user:
@@ -73,11 +76,11 @@
     group: ubnt
 
 - name: Copy systemd startup script
+  when: service_exists is false
   ansible.builtin.copy:
     src: "{{ role_path }}/files/unifi.service"
     dest: "/etc/systemd/system/unifi.service"
     mode: 0744
-  when: service_exists is false
 
 - name: Get SELinux status
   ansible.builtin.stat:
@@ -85,10 +88,11 @@
   register: _selinux_status
 
 - name: Set SELinux to permissive mode
+  when: _selinux_status.stat.exists
   ansible.posix.selinux:
     policy: targeted
     state: permissive
-  when: _selinux_status.stat.exists
+
 
 - name: Get firewalld status
   ansible.builtin.stat:

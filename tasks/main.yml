@@ -12,8 +12,9 @@
   include_tasks: "deploy-unifi-controller.yml"
 
 - name: Include UniFi Controller firewalld tasks
-  include_tasks: "configure-firewalld.yml"
   when: _firewalld_status.stat.exists
+  include_tasks: "configure-firewalld.yml"
+
 
 - name: include post-tasks
   include_tasks: "post-tasks.yml"
