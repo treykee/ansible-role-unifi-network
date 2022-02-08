@@ -22,17 +22,21 @@
       ansible.builtin.stat:
         path: "{{ path }}"
       loop:
-        - "{{ unifi_controller_install_path }}"
-        - "{{ unifi_controller_data_path }}"
-        - "{{ unifi_controller_vanity_install_path }}"
-        - "{{ unifi_controller_working_data_path }}"
+        - "{{ uc_install_path }}"
+        - "{{ uc_data_path }}"
+        - "{{ uc_vanity_install_path }}"
+        - "{{ uc_working_data_path }}"
       loop_control:
         loop_var: path
       register: _path_info
 
-    - name: Debug '_path_info'
+    - name: Set 'path_info' variable containing UniFi Controller path info
+      ansible.builtin.set_fact:
+        path_info: "{{ _path_info.results | jsonquery('[*].{path: path, stat: stat}') }}"
+
+    - name: Debug 'path_info'
       ansible.builtin.debug:
-        var: _path_info
+        var: path_info
         verbosity: 3
 
 - name: Stop UniFi Controller service
@@ -43,16 +47,16 @@
 
 
 - name: Unlink working data directory
-  when: unifi_controller_working_data_path is link
+  when: "{{ path_info | jsonquery([? path == '{{ uc_working_data_path }}'].stat) }}"
   ansible.builtin.file:
-    path: "{{ unifi_controller_working_data_path }}"
+    path: "{{ uc_working_data_path }}"
     state: absent
 
 
 - name: Unlink vanity install directory
-  when: unifi_controller_vanity_install_path is link
+  when: uc_vanity_install_path is link
   ansible.builtin.file:
-    path: "{{ unifi_controller_vanity_install_path }}"
+    path: "{{ uc_vanity_install_path }}"
     state: absent
 
 

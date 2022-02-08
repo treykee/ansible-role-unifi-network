@@ -23,16 +23,16 @@
 
 - name: Symlink versioned install path to vanity path
   ansible.builtin.file:
-    src: "{{ unifi_controller_install_path }}"
-    dest: "{{ unifi_controller_vanity_install_path }}"
+    src: "{{ uc_install_path }}"
+    dest: "{{ uc_vanity_install_path }}"
     owner: ubnt
     group: ubnt
     state: link
 
 - name: Symlink data directory to install data path
   ansible.builtin.file:
-    src: "{{ unifi_controller_data_path }}"
-    dest: "{{ unifi_controller_vanity_install_path }}/data"
+    src: "{{ uc_data_path }}"
+    dest: "{{ uc_vanity_install_path }}/data"
     owner: ubnt
     group: ubnt
     state: link

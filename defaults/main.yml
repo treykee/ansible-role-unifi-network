@@ -4,8 +4,8 @@
 unifi_controller_version: 6.4.54
 unifi_controller_java_version: 1.8.0
 unifi_controller_src_url: http://dl.ubnt.com/unifi/{{ unifi_controller_version }}/UniFi.unix.zip
-unifi_controller_install_path: /opt/unifi-{{ unifi_controller_version }}
-unifi_controller_data_path: /var/opt/UniFi/data
-unifi_controller_vanity_install_path: /opt/UniFi
-unifi_controller_working_data_path: "{{ unifi_controller_install_path }}/data"
+uc_install_path: /opt/unifi-{{ unifi_controller_version }}
+uc_data_path: /var/opt/UniFi/data
+uc_vanity_install_path: /opt/UniFi
+uc_working_data_path: "{{ uc_install_path }}/data"
 mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-4.4.asc
