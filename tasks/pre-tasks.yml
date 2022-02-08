@@ -17,7 +17,24 @@
       ansible.builtin.debug:
         var: service_exists
         verbosity: 3
+    
+    - name: Get UniFi Controller path info
+      ansible.builtin.stat:
+        path: "{{ path }}"
+      loop:
+        - "{{ unifi_controller_install_path }}"
+        - "{{ unifi_controller_data_path }}"
+        - "{{ unifi_controller_vanity_install_path }}"
+        - "{{ unifi_controller_working_data_path }}"
+      loop_control:
+        loop_var: path
+      register: _path_info_raw
 
+    - name: Debug '_path_info_raw'
+      ansible.builtin.debug:
+        var: _path_info_raw
+        verbosity: 3
+        
 - name: Stop UniFi Controller service
   ansible.builtin.systemd:
     name: unifi.service
