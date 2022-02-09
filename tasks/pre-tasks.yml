@@ -30,9 +30,9 @@
         loop_var: path
       register: _path_info
 
-    - name: Set 'path_info' variable containing UniFi Controller path info
+    - name: Set 'path_info' variable containing UniFi Controller path stat output
       ansible.builtin.set_fact:
-        path_info: "{{ _path_info.results | jsonquery('[*].{path: path, stat: stat}') }}"
+        path_info: "{{ _path_info.results | json_query('[*].{path: path, stat: stat}') }}"
 
     - name: Debug 'path_info'
       ansible.builtin.debug:
@@ -45,20 +45,21 @@
     name: unifi.service
     state: stopped
 
-
 - name: Unlink working data directory
-  when: "{{ path_info | jsonquery([? path == '{{ uc_working_data_path }}'].stat) }}"
+  when: target_path_ref is defined and target_path_ref
   ansible.builtin.file:
     path: "{{ uc_working_data_path }}"
     state: absent
-
+  vars:
+    target_path: "{{ uc_working_data_path }}"
 
 - name: Unlink vanity install directory
-  when: uc_vanity_install_path is link
+  when: target_path_ref is defined and target_path_ref
   ansible.builtin.file:
     path: "{{ uc_vanity_install_path }}"
     state: absent
-
+  vars:
+    target_path: "{{ uc_vanity_install_path }}"
 
 - name: Create service account
   ansible.builtin.user:
@@ -101,7 +102,6 @@
   ansible.posix.selinux:
     policy: targeted
     state: permissive
-
 
 - name: Get firewalld status
   ansible.builtin.stat:

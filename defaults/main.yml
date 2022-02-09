@@ -9,3 +9,4 @@ uc_data_path: /var/opt/UniFi/data
 uc_vanity_install_path: /opt/UniFi
 uc_working_data_path: "{{ uc_install_path }}/data"
 mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-4.4.asc
+target_path_ref: "{{ path_info | json_query('[? path == `{{ target_path }}`].stat.islnk') }}"
