@@ -46,22 +46,14 @@
     state: stopped
 
 - name: Unlink working data directory
-  when: target_path_lnk is defined and target_path_lnk
   ansible.builtin.file:
     path: "{{ unifi_na_working_data_path }}"
     state: absent
-  vars:
-    target_path: "{{ unifi_na_working_data_path }}"
-    target_path_lnk: "{{ path_info | json_query('[? path == `{{ target_path }}`].stat.islnk') }}"
 
 - name: Unlink vanity install directory
-  when: target_path_lnk is defined and target_path_lnk
   ansible.builtin.file:
-    path: "{{ target_path }}"
+    path: "{{ unifi_na_vanity_install_path }}"
     state: absent
-  vars:
-    target_path: "{{ unifi_na_vanity_install_path }}"
-    target_path_lnk: "{{ path_info | json_query('[? path == `{{ target_path }}`].stat.islnk') }}"
 
 - name: Create service account
   ansible.builtin.user:
