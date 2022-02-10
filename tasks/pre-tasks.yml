@@ -22,10 +22,10 @@
       ansible.builtin.stat:
         path: "{{ path }}"
       loop:
-        - "{{ uc_install_path }}"
-        - "{{ uc_data_path }}"
-        - "{{ uc_vanity_install_path }}"
-        - "{{ uc_working_data_path }}"
+        - "{{ unifi_na_install_path }}"
+        - "{{ unifi_na_data_path }}"
+        - "{{ unifi_na_vanity_install_path }}"
+        - "{{ unifi_na_working_data_path }}"
       loop_control:
         loop_var: path
       register: _path_info
@@ -46,20 +46,22 @@
     state: stopped
 
 - name: Unlink working data directory
-  when: target_path_ref is defined and target_path_ref
+  when: target_path_lnk is defined and target_path_lnk
   ansible.builtin.file:
-    path: "{{ uc_working_data_path }}"
+    path: "{{ unifi_na_working_data_path }}"
     state: absent
   vars:
-    target_path: "{{ uc_working_data_path }}"
+    target_path: "{{ unifi_na_working_data_path }}"
+    target_path_lnk: "{{ path_info | json_query('[? path == `{{ target_path }}`].stat.islnk') }}"
 
 - name: Unlink vanity install directory
-  when: target_path_ref is defined and target_path_ref
+  when: target_path_lnk is defined and target_path_lnk
   ansible.builtin.file:
-    path: "{{ uc_vanity_install_path }}"
+    path: "{{ target_path }}"
     state: absent
   vars:
-    target_path: "{{ uc_vanity_install_path }}"
+    target_path: "{{ unifi_na_vanity_install_path }}"
+    target_path_lnk: "{{ path_info | json_query('[? path == `{{ target_path }}`].stat.islnk') }}"
 
 - name: Create service account
   ansible.builtin.user:
@@ -74,7 +76,7 @@
 
 - name: Fetch and unarchive UniFi Controller source
   ansible.builtin.unarchive:
-    src: "{{ unifi_controller_src_url }}"
+    src: "{{ unifi_na_src_url }}"
     dest: "{{ _temp_dir.path }}"
     remote_src: true
     owner: ubnt

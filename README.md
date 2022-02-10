@@ -1,8 +1,6 @@
-# Ansible Role: UniFi Controller
+# Ansible Role: UniFi Network Application
 
-[![Build Status](https://travis-ci.org/treykee/ansible-role-unifi-controller.svg?branch=master)](https://travis-ci.org/treykee/ansible-role-unifi-controller)
-
-Installs Ubiquiti UniFi Controller software on RHEL/CentOS Debian/Ubuntu.
+Installs Ubiquiti UniFi Network Application software on RHEL/CentOS Debian/Ubuntu.
 
 ## Requirements
 
@@ -13,16 +11,16 @@ None.
 Available variables are listed below. For default values see `defaults/main.yml`:
 
 ```yaml
-unifi_controller_version: ""
+unifi_na_version: ""
 ```
 
-Set the version of the UniFi controller to be installed.
+Set the version of the UniFi Network Application to be installed.
 
 ```yaml
-unifi_controller_java_version: ""
+unifi_na_java_version: ""
 ```
 
-Set the version of Java required to support the version of the UniFi Controller specificed.
+Set the version of Java required to support the version of the UniFi Network Application specificed.
 **Note**: This should only be changed when the version of Java specified in the role defaults no longer meets the package requirements.
 
 ## Dependencies
@@ -34,7 +32,7 @@ None
 ```yaml
 - hosts: servers
   roles:
-    - treykee.ansible-role-unifi-controller
+    - treykee.ansible-role-unifi-network_application
 ```
 
 ## License

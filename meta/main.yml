@@ -1,9 +1,9 @@
 ---
 galaxy_info:
-  role_name: unifi_controller
+  role_name: unifi_network_application
   namespace: treykee
   author: Trey Keenon
-  description: Ubiquiti UniFi Controller
+  description: Ubiquiti UniFi Network Application
   company: ""
 
   license: MIT
@@ -19,4 +19,4 @@ galaxy_info:
     - networking
     - system
     - unifi
-    - controller
+    - 

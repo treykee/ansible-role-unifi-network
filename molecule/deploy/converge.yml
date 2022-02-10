@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - treykee.unifi_controller
+    - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
