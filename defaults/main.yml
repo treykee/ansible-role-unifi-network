@@ -1,7 +1,7 @@
 ---
 # defaults file for unifi-controller
 
-unifi_na_version: 6.5.53
+unifi_na_version: 6.5.55
 unifi_na_java_version: 1.8.0
 unifi_na_src_url: http://dl.ubnt.com/unifi/{{ unifi_na_version }}/UniFi.unix.zip
 unifi_na_install_path: /opt/unifi-{{ unifi_na_version }}
