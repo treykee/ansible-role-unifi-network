@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
+    - ansible-role-unifi-controller
