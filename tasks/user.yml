@@ -1,4 +1,3 @@
-
 ---
 - name: Ensure unifi_group exists.
   group: "name={{ unifi_group }} state=present"

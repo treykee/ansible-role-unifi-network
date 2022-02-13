@@ -17,7 +17,7 @@
       ansible.builtin.debug:
         var: unifi_service_status
         verbosity: 3
-    
+
     - name: Check if UniFi Network Application is installed already.
       ansible.builtin.stat:
         path: "{{ path }}"
