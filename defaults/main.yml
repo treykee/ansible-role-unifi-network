@@ -2,7 +2,7 @@
 # defaults file for unifi-controller
 
 unifi_create_user: true
-unifi_user: unifi
+unifi_user: ubnt
 unifi_group: "{{ unifi_user }}"
 
 unifi_na_version: 6.5.55
