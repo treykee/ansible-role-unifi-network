@@ -1,46 +1,6 @@
 ---
-- name: Resolve UniFi Controller install state
-  block:
-    - name: Populate service facts
-      ansible.builtin.service_facts:
-
-    - name: Debug 'ansible_facts.services'
-      ansible.builtin.debug:
-        var: ansible_facts.services
-        verbosity: 3
-
-    - name: Assert service status
-      ansible.builtin.set_fact:
-        service_exists: "{{ (ansible_facts.services is search('unifi')) | ternary ('true', 'false') }}"
-
-    - name: Debug 'service_exists'
-      ansible.builtin.debug:
-        var: service_exists
-        verbosity: 3
-    
-    - name: Get UniFi Controller path info
-      ansible.builtin.stat:
-        path: "{{ path }}"
-      loop:
-        - "{{ unifi_na_install_path }}"
-        - "{{ unifi_na_data_path }}"
-        - "{{ unifi_na_vanity_install_path }}"
-        - "{{ unifi_na_working_data_path }}"
-      loop_control:
-        loop_var: path
-      register: _path_info
-
-    - name: Set 'path_info' variable containing UniFi Controller path stat output
-      ansible.builtin.set_fact:
-        path_info: "{{ _path_info.results | json_query('[*].{path: path, stat: stat}') }}"
-
-    - name: Debug 'path_info'
-      ansible.builtin.debug:
-        var: path_info
-        verbosity: 3
-
 - name: Stop UniFi Controller service
-  when: service_exists is true
+  when: ansible_service_mgr == "systemd" and unifi_service_status is true
   ansible.builtin.systemd:
     name: unifi.service
     state: stopped
@@ -54,11 +14,6 @@
   ansible.builtin.file:
     path: "{{ unifi_na_vanity_install_path }}"
     state: absent
-
-- name: Create service account
-  ansible.builtin.user:
-    name: ubnt
-    system: true
 
 - name: Create temp working directory
   ansible.builtin.tempfile:
@@ -75,24 +30,14 @@
     group: ubnt
 
 - name: Copy systemd startup script
-  when: service_exists is false
+  when: ansible_service_mgr == "systemd" and unifi_service_status is false
   ansible.builtin.copy:
     src: "{{ role_path }}/files/unifi.service"
     dest: "/etc/systemd/system/unifi.service"
     mode: 0744
 
-- name: Get SELinux status
-  ansible.builtin.stat:
-    path: /etc/sysconfig/selinux
-  register: _selinux_status
-
-- name: Debug '_selinux_status'
-  ansible.builtin.debug:
-    var: _selinux_status
-    verbosity: 3
-
 - name: Set SELinux to permissive mode
-  when: _selinux_status.stat.exists
+  when: ansible_selinux.status == "enabled"
   ansible.posix.selinux:
     policy: targeted
     state: permissive
