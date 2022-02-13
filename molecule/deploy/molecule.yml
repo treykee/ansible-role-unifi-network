@@ -5,6 +5,7 @@ driver:
   name: podman
 lint: |
   yamllint .
+  ansible-lint .
 platforms:
   - name: rhel8
     image: registry.access.redhat.com/ubi8/ubi-init
