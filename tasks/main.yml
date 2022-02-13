@@ -7,7 +7,10 @@
 
 - name: Resolve UniFi install state
   include_tasks: "resolve-install-state.yml"
-  
+
+- name: Include tasks to create system user and group
+  include_tasks: "user.yml"
+
 - name: Include pre-tasks
   include_tasks: "pre-tasks.yml"
 
