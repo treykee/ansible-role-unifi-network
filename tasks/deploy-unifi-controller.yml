@@ -18,7 +18,7 @@
     mode: preserve
   vars:
     target_path: "{{ unifi_na_install_path }}"
-    target_path_dir: "{{ path_info | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
+    target_path_dir: "{{ unifi_path_status | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
 
 - name: Remove temp directory
   ansible.builtin.file:
