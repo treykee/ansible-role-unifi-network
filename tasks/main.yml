@@ -5,6 +5,9 @@
 - name: Include OS-specific setup tasks
   include_tasks: "setup-{{ ansible_os_family }}.yml"
 
+- name: Resolve UniFi install state
+  include_tasks: "resolve-install-state.yml"
+  
 - name: Include pre-tasks
   include_tasks: "pre-tasks.yml"
 
