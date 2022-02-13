@@ -26,8 +26,8 @@
     src: "{{ unifi_na_src_url }}"
     dest: "{{ _temp_dir.path }}"
     remote_src: true
-    owner: ubnt
-    group: ubnt
+    owner: "{{ unifi_user }}"
+    group: "{{ unifi_group }}"
 
 - name: Copy systemd startup script
   when: ansible_service_mgr == "systemd" and unifi_service_status is false
