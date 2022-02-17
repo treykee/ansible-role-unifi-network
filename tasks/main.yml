@@ -25,7 +25,7 @@
   include_tasks: "pre-tasks.yml"
 
 - name: Include UniFi Controller deploy tasks
-  include_tasks: "deploy-unifi-controller.yml"
+  include_tasks: "install.yml"
 
 - name: Include UniFi Controller firewalld tasks
   when: _firewalld_status.stat.exists
