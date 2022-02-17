@@ -1,9 +1,19 @@
 ---
-- name: Include OS-specific variables
-  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+- name: Include Red Hat specific variables
+  when: ansible_os_family == "RedHat"
+  ansible.builtin.include_vars: "RedHat.yml"
 
-- name: Include OS-specific setup tasks
-  include_tasks: "setup-{{ ansible_os_family }}.yml"
+- name: Include Debian specific variables
+  when: ansible_os_family == "Debian"
+  ansible.builtin.include_vars: "Debian.yml"
+
+- name: Include Red Hat specific setup tasks
+  when: ansible_os_family == "RedHat"
+  include_tasks: "setup-RedHat.yml"
+
+- name: Include Debian specific setup tasks
+  when: ansible_os_family == "Debian"
+  include_tasks: "setup-Debian.yml"
 
 - name: Resolve UniFi install state
   include_tasks: "resolve-install-state.yml"
@@ -20,7 +30,6 @@
 - name: Include UniFi Controller firewalld tasks
   when: _firewalld_status.stat.exists
   include_tasks: "configure-firewalld.yml"
-
 
 - name: include post-tasks
   include_tasks: "post-tasks.yml"
