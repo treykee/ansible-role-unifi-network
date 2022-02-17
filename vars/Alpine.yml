@@ -1,0 +1,4 @@
+---
+alpine_packages:
+  - unzip
+  - openjdk8
