@@ -10,6 +10,7 @@
         verbosity: 3
 
     - name: Check if UniFi service exists
+      when: ansible_facts.services is defined
       ansible.builtin.set_fact:
         unifi_service_status: "{{ (ansible_facts.services is search('unifi')) | ternary ('true', 'false') }}"
 
@@ -36,5 +37,5 @@
 
     - name: Debug 'unifi_path_status'
       ansible.builtin.debug:
-        var: unifi_path_status
+        var: _unifi_path_status
         verbosity: 3
