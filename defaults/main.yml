@@ -1,5 +1,5 @@
 ---
-# defaults file for unifi-controller
+# defaults file for unifi-network
 
 unifi_create_user: true
 unifi_user: ubnt

@@ -1,5 +1,5 @@
 ---
-# handlers file for unifi-controller
+# handlers file for unifi-network
 # define 'target_state' var at the play level as one of 'started', 'stopped', 'restarted', or 'reloaded'
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html for more info
 
@@ -8,7 +8,7 @@
     name: firewalld
     state: "{{ target_state | default(restarted) }}"
 
-- name: update unifi controller
+- name: update unifi network application
   ansible.builtin.systemd:
     name: unifi
     state: "{{ target_state | default(restarted) }}"

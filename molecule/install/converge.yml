@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - ansible-role-unifi-controller
+    - ansible-role-unifi-network

@@ -1,5 +1,5 @@
 ---
-- name: Resolve UniFi Controller install state
+- name: Resolve UniFi Network Application install state
   block:
     - name: Populate service facts
       ansible.builtin.service_facts:
@@ -31,7 +31,7 @@
         loop_var: path
       register: _unifi_path_status
 
-    - name: Set 'unifi_path_status' variable containing UniFi Controller path stat output
+    - name: Set 'unifi_path_status' variable containing UniFi Network Application path stat output
       ansible.builtin.set_fact:
         unifi_path_status: "{{ _unifi_path_status.results | json_query('[*].{path: path, stat: stat}') }}"
 

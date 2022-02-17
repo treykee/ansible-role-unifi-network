@@ -1,5 +1,5 @@
 ---
-- name: Enable UniFi Controller system service
+- name: Enable UniFi Network Application system service
   ansible.builtin.systemd:
     name: unifi.service
     enabled: true
