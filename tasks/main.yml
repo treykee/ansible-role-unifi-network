@@ -1,35 +1,37 @@
 ---
-- name: Include Red Hat specific variables
-  when: ansible_os_family == "RedHat"
-  ansible.builtin.include_vars: "RedHat.yml"
+- name: Include OS specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family }}.yml"
+    - paths:
+        - vars
+      skip: true
 
-- name: Include Debian specific variables
-  when: ansible_os_family == "Debian"
-  ansible.builtin.include_vars: "Debian.yml"
-
-- name: Include Red Hat specific setup tasks
-  when: ansible_os_family == "RedHat"
-  include_tasks: "setup-RedHat.yml"
-
-- name: Include Debian specific setup tasks
-  when: ansible_os_family == "Debian"
-  include_tasks: "setup-Debian.yml"
+- name: Include OS specific setup tasks
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_first_found:
+    - files:
+        - "setup-{{ ansible_os_family }}.yml"
+    - paths:
+        - tasks
+      skip: true
 
 - name: Resolve UniFi install state
-  include_tasks: "resolve-install-state.yml"
+  ansible.builtin.include_tasks: "resolve-install-state.yml"
 
 - name: Include tasks to create system user and group
-  include_tasks: "user.yml"
+  ansible.builtin.include_tasks: "user.yml"
 
 - name: Include pre-tasks
-  include_tasks: "pre-tasks.yml"
+  ansible.builtin.include_tasks: "pre-tasks.yml"
 
 - name: Include UniFi Network Application deploy tasks
-  include_tasks: "install.yml"
+  ansible.builtin.include_tasks: "install.yml"
 
 - name: Include UniFi Network Application firewalld tasks
   when: _firewalld_status.stat.exists
-  include_tasks: "configure-firewalld.yml"
+  ansible.builtin.include_tasks: "configure-firewalld.yml"
 
 - name: include post-tasks
-  include_tasks: "post-tasks.yml"
+  ansible.builtin.include_tasks: "post-tasks.yml"
