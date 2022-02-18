@@ -32,7 +32,7 @@ None
 ```yaml
 - hosts: servers
   roles:
-    - treykee.ansible-role-unifi-network_application
+    - treykee.unifi-network-application
 ```
 
 ## License
