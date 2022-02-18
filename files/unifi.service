@@ -1,9 +1,9 @@
 #
-# Systemd unit file for UniFi Controller
+# Systemd unit file for UniFi Network Application
 #
 
 [Unit]
-Description=UniFi Controller
+Description=UniFi Network Application
 After=syslog.target network.target
 
 [Service]

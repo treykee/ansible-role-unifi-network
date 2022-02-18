@@ -1,0 +1,19 @@
+---
+- name: Add Alpine 3.9 repositories
+  ansible.builtin.lineinfile:
+    path: /etc/apk/repositories
+    line: "{{ line }}"
+  loop:
+    - https://dl-cdn.alpinelinux.org/alpine/v3.9/main
+    - https://dl-cdn.alpinelinux.org/alpine/v3.9/community
+  loop_control:
+    loop_var: line
+
+- name: Install prerequisite packages
+  community.general.apk:
+    name: "{{ package }}"
+    state: latest
+    update_cache: yes
+  loop: "{{ alpine_packages }}"
+  loop_control:
+    loop_var: package

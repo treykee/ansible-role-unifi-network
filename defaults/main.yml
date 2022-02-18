@@ -1,5 +1,9 @@
 ---
-# defaults file for unifi-controller
+# defaults file for unifi-network
+
+unifi_create_user: true
+unifi_user: ubnt
+unifi_group: "{{ unifi_user }}"
 
 unifi_na_version: 6.5.55
 unifi_na_java_version: 1.8.0
@@ -8,4 +12,5 @@ unifi_na_install_path: /opt/unifi-{{ unifi_na_version }}
 unifi_na_data_path: /var/opt/UniFi/data
 unifi_na_vanity_install_path: /opt/UniFi
 unifi_na_working_data_path: "{{ unifi_na_install_path }}/data"
+
 mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-4.4.asc
