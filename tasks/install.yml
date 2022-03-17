@@ -10,7 +10,7 @@
 - name: Copy application directory to '/opt'
   when: not target_path_dir
   ansible.builtin.copy:
-    src: "{{ _temp_dir.path }}/unifi/"
+    src: "{{ _temp_dir.path }}/UniFi/"
     dest: "{{ target_path }}"
     remote_src: true
     owner: "{{ unifi_user }}"
