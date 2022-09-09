@@ -12,7 +12,7 @@
   ansible.builtin.include_tasks: "{{ item }}"
   with_first_found:
     - files:
-        - "setup-{{ ansible_os_family }}.yml"
+        - "initialize-{{ ansible_os_family }}.yml"
     - paths:
         - tasks
       skip: true
@@ -21,17 +21,17 @@
   ansible.builtin.include_tasks: "resolve-install-state.yml"
 
 - name: Include tasks to create system user and group
-  ansible.builtin.include_tasks: "user.yml"
+  ansible.builtin.include_tasks: "set-user.yml"
 
 - name: Include pre-tasks
   ansible.builtin.include_tasks: "pre-tasks.yml"
 
 - name: Include UniFi Network Application deploy tasks
-  ansible.builtin.include_tasks: "install.yml"
+  ansible.builtin.include_tasks: "install-unifi-na.yml"
 
 - name: Include UniFi Network Application firewalld tasks
   when: _firewalld_status.stat.exists
-  ansible.builtin.include_tasks: "configure-firewalld.yml"
+  ansible.builtin.include_tasks: "set-firewalld.yml"
 
 - name: include post-tasks
   ansible.builtin.include_tasks: "post-tasks.yml"
