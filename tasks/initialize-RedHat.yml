@@ -9,7 +9,7 @@
   ansible.builtin.yum_repository:
     name: mongodb-org-4.4
     description: MongoDB Repository
-    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/x86_64/"
+    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/{{ ansible_architecture }}/"
     gpgcheck: true
     enabled: true
     gpgkey: "{{ mongodb_pgp_key_url }}"
