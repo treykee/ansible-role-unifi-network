@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - treykee.unifi_network_application
+    - treykee.unifi_network
