@@ -2,8 +2,8 @@
 galaxy_info:
   role_name: unifi_network
   namespace: treykee
-  author: Trey Keenon
-  description: Ubiquiti UniFi Network Application
+  author: treykee
+  description: Ubiquiti UniFi Network application
   company: ""
 
   license: MIT
