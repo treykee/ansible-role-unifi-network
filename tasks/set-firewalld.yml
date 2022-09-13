@@ -1,5 +1,5 @@
 ---
-- name: Copy UniFi Network Application firewalld config
+- name: Copy UniFi Network application firewalld config
   vars:
     target_state: reload
   ansible.builtin.copy:
@@ -8,7 +8,7 @@
     mode: 0744
   notify: update firewalld
 
-- name: Restart firewalld and allow UniFi Network Application traffic
+- name: Restart firewalld and allow UniFi Network application traffic
   ansible.posix.firewalld:
     service: unifi
     permanent: true

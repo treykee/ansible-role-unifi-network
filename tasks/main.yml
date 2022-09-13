@@ -26,10 +26,10 @@
 - name: Include pre-tasks
   ansible.builtin.include_tasks: "pre-tasks.yml"
 
-- name: Include UniFi Network Application deploy tasks
+- name: Include UniFi Network application deploy tasks
   ansible.builtin.include_tasks: "install-unifi-na.yml"
 
-- name: Include UniFi Network Application firewalld tasks
+- name: Include UniFi Network application firewalld tasks
   when: _firewalld_status.stat.exists
   ansible.builtin.include_tasks: "set-firewalld.yml"
 

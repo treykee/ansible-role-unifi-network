@@ -1,6 +1,6 @@
 <service version="1.0">
     <short>unifi</short>
-    <description>UniFi Network Application</description>
+    <description>UniFi Network application</description>
     <port port="8081" protocol="tcp"/>
     <port port="8080" protocol="tcp"/>
     <port port="8443" protocol="tcp"/>

@@ -1,5 +1,5 @@
 ---
-- name: Enable UniFi Network Application system service
+- name: Enable UniFi Network application system service
   when: ansible_service_mgr == "systemd" and unifi_service_status is true
   ansible.builtin.systemd:
     name: unifi.service

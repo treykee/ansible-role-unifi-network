@@ -1,5 +1,5 @@
 ---
-- name: Stop UniFi Network Application service
+- name: Stop UniFi Network application service
   when: ansible_service_mgr == "systemd" and unifi_service_status is true
   ansible.builtin.systemd:
     name: unifi.service
@@ -21,7 +21,7 @@
     suffix: "-unifi"
   register: _temp_dir
 
-- name: Fetch and unarchive UniFi Network Application source
+- name: Fetch and unarchive UniFi Network application source
   ansible.builtin.unarchive:
     src: "{{ unifi_na_src_url }}"
     dest: "{{ _temp_dir.path }}"

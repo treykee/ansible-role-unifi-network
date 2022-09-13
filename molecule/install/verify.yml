@@ -5,7 +5,7 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Check that UniFi Network Application is running
+    - name: Check that UniFi Network application is running
       uri:
         url: https://127.0.0.1:8443/manage/account/login
         status_code: 200
