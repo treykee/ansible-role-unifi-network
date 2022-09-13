@@ -1,5 +1,5 @@
 ---
-unifi_na_ports:
+unifi_ports:
   - port_number: 3478
     protocol: udp
     usage: "Port used for STUN."

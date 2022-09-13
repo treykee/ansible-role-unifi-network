@@ -11,13 +11,13 @@ None.
 Available variables are listed below. For default values see `defaults/main.yml`:
 
 ```yaml
-unifi_na_version: ""
+unifi_version: ""
 ```
 
 Set the version of the UniFi Network application to be installed.
 
 ```yaml
-unifi_na_java_version: ""
+unifi_java_version: ""
 ```
 
 Set the version of Java required to support the version of the UniFi Network application specificed.

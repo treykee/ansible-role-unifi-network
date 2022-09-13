@@ -23,10 +23,10 @@
       ansible.builtin.stat:
         path: "{{ path }}"
       loop:
-        - "{{ unifi_na_install_path }}"
-        - "{{ unifi_na_data_path }}"
-        - "{{ unifi_na_vanity_install_path }}"
-        - "{{ unifi_na_working_data_path }}"
+        - "{{ unifi_install_path }}"
+        - "{{ unifi_data_path }}"
+        - "{{ unifi_vanity_install_path }}"
+        - "{{ unifi_working_data_path }}"
       loop_control:
         loop_var: path
       register: _unifi_path_status
