@@ -38,4 +38,4 @@ jobs:
         with:
           image: "${{ matrix.image }}"
           options: parallel
-          scenario: install
+          command: "test -d delegated"
