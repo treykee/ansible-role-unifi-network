@@ -39,4 +39,4 @@ jobs:
           image: "${{ matrix.image }}"
           options: parallel
           scenario: install
-          command: "--driver-name delegated test"
+          command: "test --driver-name delegated"
