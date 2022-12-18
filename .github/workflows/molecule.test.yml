@@ -10,33 +10,23 @@ jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
-      - name: checkout
+      - name: Check out the codebase.
         uses: actions/checkout@v3
         with:
           path: "${{ github.repository }}"
-      - name: molecule
-        uses: robertdebock/molecule-action@4.0.9
-        with:
-          command: lint
-  test:
-    needs:
-      - lint
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        image:
-          - alpine
-          - rhel8
 
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
         with:
-          path: "${{ github.repository }}"
-      - name: molecule
-        uses: robertdebock/molecule-action@4.0.9
-        with:
-          image: "${{ matrix.image }}"
-          options: parallel
-          scenario: install
-          command: "test --driver-name delegated"
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule[docker] yamllint ansible-lint
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+        working-directory: molecule
