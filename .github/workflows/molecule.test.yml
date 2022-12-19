@@ -7,7 +7,7 @@ on:
   - pull_request
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out the codebase.
@@ -24,7 +24,7 @@ jobs:
         run: pip3 install ansible molecule[docker] yamllint ansible-lint
 
       - name: Run Molecule tests.
-        run: molecule test
+        run: molecule test -s install
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
