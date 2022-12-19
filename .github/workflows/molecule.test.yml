@@ -21,7 +21,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] yamllint ansible-lint
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install ansible molecule[docker] yamllint ansible-lint
 
       - name: Run Molecule tests.
         run: molecule test -s install
@@ -29,4 +31,4 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
-        working-directory: "${{ github.repository }}/molecule"
+        working-directory: molecule
