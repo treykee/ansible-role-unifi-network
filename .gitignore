@@ -16,7 +16,7 @@
 !/.editorconfig
 ~/.gitattributes
 !/.gitignore
-!/.prettierrc
+!/.prettierrc.yaml
 !/.travis.yml
 !/.yamllint
 !/LICENSE
