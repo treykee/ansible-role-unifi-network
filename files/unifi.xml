@@ -1,11 +1,27 @@
 <service version="1.0">
     <short>unifi</short>
-    <description>UniFi Network application</description>
-    <port port="8081" protocol="tcp"/>
-    <port port="8080" protocol="tcp"/>
-    <port port="8443" protocol="tcp"/>
-    <port port="8880" protocol="tcp"/>
-    <port port="8843" protocol="tcp"/>
-    <port port="10001" protocol="udp"/>
+    <description>The following includes the UDP and TCP ports used by UniFi.</description>
+    <!--Port used for DNS. This is required for Guest Portal redirection, downloading updates, and remote access.-->
+    <port port="53" protocol="tcp" protocol="udp"/>
+    <!--Port used for STUN.-->
     <port port="3478" protocol="udp"/>
+    <!--Port used for remote syslog capture.-->
+    <port port="5514" protocol="tcp"/>
+    <!--Port used for device and application communication-->
+    <port port="8080" protocol="tcp"/>
+    <!--Port used for application GUI/API as seen in a web browser.-->
+    <port port="8443" protocol="tcp"/>
+    <!--Port used for HTTP portal redirection.-->
+    <port port="8880" protocol="tcp"/>
+    <!--Port used for HTTPS portal redirection.-->
+    <port port="8843" protocol="tcp"/>
+    <!--Port used for UniFi mobile speed test.-->
+    <port port="6789" protocol="tcp"/>
+    <!--Port used for local-bound database communication.-->
+    <port port="27117" protocol="tcp"/>
+    <!--Port used for device discovery.-->
+    <port port="10001" protocol="udp"/>
+    <!--Port used for "Make application discoverable on L2 network" in the UniFi Network settings.-->
+    <port port="1900" protocol="udp"/>
+    <!--Port used for NTP (date/time). Required for establishing secure communication with remote access servers.-->
 </service>
