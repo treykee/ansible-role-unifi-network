@@ -1,7 +1,7 @@
 ---
 - name: Create 'data' directory
   ansible.builtin.file:
-    path: "{{ unifi_data_path }}"
+    path: "{{ unifi_data_real_path }}"
     state: directory
     mode: 0755
     owner: "{{ unifi_user }}"
@@ -17,7 +17,7 @@
     group: "{{ unifi_group }}"
     mode: preserve
   vars:
-    target_path: "{{ unifi_install_path }}"
+    target_path: "{{ unifi_install_real_path }}"
     target_path_dir: "{{ unifi_path_status | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
 
 - name: Remove temp directory
@@ -27,16 +27,16 @@
 
 - name: Symlink versioned install path to vanity path
   ansible.builtin.file:
-    src: "{{ unifi_install_path }}"
-    dest: "{{ unifi_vanity_install_path }}"
+    src: "{{ unifi_install_real_path }}"
+    dest: "{{ unifi_install_vanity_path }}"
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     state: link
 
 - name: Symlink data directory to install data path
   ansible.builtin.file:
-    src: "{{ unifi_data_path }}"
-    dest: "{{ unifi_working_data_path }}"
+    src: "{{ unifi_data_real_path }}"
+    dest: "{{ unifi_data_working_path }}"
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     state: link
