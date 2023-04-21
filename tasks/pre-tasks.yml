@@ -7,12 +7,12 @@
 
 - name: Unlink working data directory
   ansible.builtin.file:
-    path: "{{ unifi_working_data_path }}"
+    path: "{{ unifi_data_working_path }}"
     state: absent
 
 - name: Unlink vanity install directory
   ansible.builtin.file:
-    path: "{{ unifi_vanity_install_path }}"
+    path: "{{ unifi_install_vanity_path }}"
     state: absent
 
 - name: Create temp working directory
@@ -20,6 +20,11 @@
     state: directory
     suffix: "-unifi"
   register: _temp_dir
+
+- name: Debug '_temp_dir'
+  ansible.builtin.debug:
+    var: _temp_dir
+    verbosity: 3
 
 - name: Fetch and unarchive UniFi Network application source
   ansible.builtin.unarchive:
