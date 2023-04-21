@@ -33,5 +33,5 @@
   when: _firewalld_status.stat.exists
   ansible.builtin.include_tasks: "set-firewalld.yml"
 
-- name: include post-tasks
+- name: Include post-tasks
   ansible.builtin.include_tasks: "post-tasks.yml"

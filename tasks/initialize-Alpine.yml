@@ -13,7 +13,7 @@
   community.general.apk:
     name: "{{ package }}"
     state: latest
-    update_cache: yes
+    update_cache: true
   loop: "{{ alpine_packages }}"
   loop_control:
     loop_var: package
