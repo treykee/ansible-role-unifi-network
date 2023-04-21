@@ -1,9 +1,9 @@
 ---
 galaxy_info:
-  role_name: unifi_network
+  role_name: unifi-network-application
   namespace: treykee
   author: treykee
-  description: Ubiquiti UniFi Network application
+  description: Ubiquiti UniFi Network Application
   company: ""
 
   license: MIT
