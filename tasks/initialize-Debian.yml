@@ -6,9 +6,9 @@
 
 - name: Add MongoDB apt repository
   ansible.builtin.apt_repository:
-    repo: deb https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/4.4 multiverse
+    repo: deb https://repo.mongodb.org/apt/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }}/mongodb-org/{{ mongodb_version }} multiverse
     state: present
-    filename: mongodb-org-4.4
+    filename: mongodb-org-{{ mongodb_version }}
 
 - name: Install prerequisite packages
   ansible.builtin.apt:
