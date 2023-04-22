@@ -1,7 +1,8 @@
 ---
 name: Release
 
-on: workflow_dispatch
+on:   # yamllint disable-line rule:truthy
+  workflow_dispatch
 
 jobs:
   build:
