@@ -13,6 +13,7 @@
 !/templates/**
 !/vars/**
 !/venv/requirements.txt
+!/.ansible-lint
 !/.editorconfig
 ~/.gitattributes
 !/.gitignore
