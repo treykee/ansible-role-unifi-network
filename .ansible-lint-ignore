@@ -1,0 +1,3 @@
+# This file contains ignores rule violations for ansible-lint
+tasks/install-unifi.yml jinja[invalid]
+tasks/resolve-install-state.yml jinja[spacing]
