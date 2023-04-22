@@ -1,6 +1,6 @@
 ---
 name: CI
-on:
+on:   # yamllint disable-line rule:truthy
   push:
     branches:
       - master
@@ -9,7 +9,7 @@ on:
 
 defaults:
   run:
-    working-directory: "treykee.unifi-network-application"
+    working-directory: "treykee.unifi_network_application"
 
 jobs:
   lint:
@@ -19,7 +19,7 @@ jobs:
       - name: Check out codebase.
         uses: actions/checkout@v2
         with:
-          path: "treykee.unifi-network-application"
+          path: "treykee.unifi_network_application"
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
@@ -50,7 +50,7 @@ jobs:
       - name: Check out codebase.
         uses: actions/checkout@v2
         with:
-          path: "treykee.unifi-network-application"
+          path: "treykee.unifi_network_application"
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2

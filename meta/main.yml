@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: unifi-network-application
+  role_name: unifi_network_application
   namespace: treykee
   author: "Trey Keenon <treykee@gmail.com>"
   description: Ubiquiti UniFi Network Application
