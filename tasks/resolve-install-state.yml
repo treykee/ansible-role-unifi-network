@@ -33,7 +33,9 @@
 
     - name: Set 'unifi_path_status' variable containing UniFi Network application path stat output
       ansible.builtin.set_fact:
-        unifi_path_status: "{{ _unifi_path_status.results | json_query('[*].{path: path, stat: stat}') }}"
+        unifi_path_status: "{{ _unifi_path_status.results | community.general.json_query(unifi_path_status_query) }}"
+      vars:
+        unifi_path_status_query: "[*].{path: path, stat: stat}"
 
     - name: Debug 'unifi_path_status'
       ansible.builtin.debug:
