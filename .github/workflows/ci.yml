@@ -7,24 +7,21 @@ on:   # yamllint disable-line rule:truthy
   pull_request:
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: "treykee.unifi_network_application"
-
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          path: "treykee.unifi_network_application"
+          path: ${{ github.repository }}
 
       - name: run molecule lint
         uses: ucomesdag/molecule-action@main
         with:
           command: lint
+          scenario: install
 
   test:
     name: Test
@@ -39,9 +36,9 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          path: "treykee.unifi_network_application"
+          path: ${{ github.repository }}
       - name: run molecule test
         uses: ucomesdag/molecule-action@main
         with:
