@@ -16,28 +16,20 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out codebase.
+      - name: checkout
         uses: actions/checkout@v2
         with:
           path: "treykee.unifi_network_application"
 
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
+      - name: run molecule lint
+        uses: ucomesdag/molecule-action@main
         with:
-          python-version: "3.x"
+          command: lint
 
-      - name: Install test dependencies.
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule[podman] yamllint ansible-lint jmespath
-
-      - name: Lint codebase.
-        run: |
-          yamllint .
-          ansible-lint .
-
-  molecule:
-    name: Molecule
+  test:
+    name: Test
+    needs:
+      - lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,24 +38,13 @@ jobs:
           - alpine3
 
     steps:
-      - name: Check out codebase.
+      - name: checkout
         uses: actions/checkout@v2
         with:
           path: "treykee.unifi_network_application"
-
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
+      - name: run molecule test
+        uses: ucomesdag/molecule-action@main
         with:
-          python-version: "3.x"
-
-      - name: Install test dependencies.
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule[podman] yamllint ansible-lint jmespath
-
-      - name: Run Molecule tests.
-        run: molecule test -s install
-        env:
-          PY_COLORS: "1"
-          ANSIBLE_FORCE_COLOR: "1"
-          MOLECULE_PLATFORM_NAME: ${{ matrix.platforms }}
+          command: test -p "${{ matrix.platforms }}"
+          options: parallel
+          scenario: install
