@@ -7,41 +7,64 @@ on:   # yamllint disable-line rule:truthy
   pull_request:
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: "treykee.unifi_network_application"
+
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Check out codebase.
         uses: actions/checkout@v3
         with:
-          path: ${{ github.repository }}
+          path: "treykee.unifi_network_application"
 
-      - name: run molecule lint
-        uses: ucomesdag/molecule-action@main
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
         with:
-          command: lint
-          scenario: pipeline
+          python-version: "3.x"
 
-  test:
-    name: Test
-    needs:
-      - lint
-    runs-on: ubuntu-20.04
+      - name: Install test dependencies.
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install ansible molecule[docker] yamllint ansible-lint jmespath
+
+      - name: Lint codebase.
+        run: |
+          yamllint .
+          ansible-lint .
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: ${{ !contains(github.event_name, 'pull_request') }}
       matrix:
         platforms:
           - rhel8
           - alpine3
 
     steps:
-      - name: checkout
+      - name: Check out codebase.
         uses: actions/checkout@v3
         with:
-          path: ${{ github.repository }}
-      - name: run molecule test
-        uses: ucomesdag/molecule-action@main
+          path: "treykee.unifi_network_application"
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
         with:
-          command: test -p "${{ matrix.platforms }}"
-          options: parallel
-          scenario: pipeline
+          python-version: "3.x"
+
+      - name: Install test dependencies.
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install ansible molecule[docker] yamllint ansible-lint jmespath
+
+      - name: Run Molecule tests.
+        run: molecule test -s pipeline
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
+          MOLECULE_PLATFORM_NAME: ${{ matrix.platforms }}
