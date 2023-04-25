@@ -10,7 +10,7 @@ on:   # yamllint disable-line rule:truthy
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -21,13 +21,13 @@ jobs:
         uses: ucomesdag/molecule-action@main
         with:
           command: lint
-          scenario: install
+          scenario: pipeline
 
   test:
     name: Test
     needs:
       - lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         platforms:
@@ -44,4 +44,4 @@ jobs:
         with:
           command: test -p "${{ matrix.platforms }}"
           options: parallel
-          scenario: install
+          scenario: pipeline
