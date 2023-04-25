@@ -3,7 +3,7 @@ dependency:
   name: galaxy
   enabled: false
 driver:
-  name: podman
+  name: docker
 lint: |
   yamllint .
   ansible-lint .
