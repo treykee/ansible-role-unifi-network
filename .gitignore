@@ -18,7 +18,7 @@
 !/.editorconfig
 ~/.gitattributes
 !/.gitignore
-!/.prettierrc.yaml
+!/.prettierrc
 !/.yamllint
 !/LICENSE
 !/README.md
