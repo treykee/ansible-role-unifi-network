@@ -29,7 +29,7 @@ jobs:
       - name: Install test dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule[podman] yamllint ansible-lint jmespath
+          python3 -m pip install ansible molecule[podman] molecule-plugins[podman] yamllint ansible-lint jmespath
 
       - name: Lint codebase.
         run: |
@@ -60,7 +60,7 @@ jobs:
       - name: Install test dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule[podman] yamllint ansible-lint jmespath
+          python3 -m pip install ansible molecule[podman] molecule-plugins[podman] yamllint ansible-lint jmespath
 
       - name: Run Molecule tests.
         run: molecule test -s pipeline
