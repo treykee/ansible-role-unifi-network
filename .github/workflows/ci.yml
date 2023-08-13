@@ -12,31 +12,8 @@ defaults:
     working-directory: "treykee.unifi_network_application"
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out codebase.
-        uses: actions/checkout@v3
-        with:
-          path: "treykee.unifi_network_application"
-
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
-
-      - name: Install test dependencies.
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule[podman] molecule-plugins[podman] yamllint ansible-lint jmespath
-
-      - name: Lint codebase.
-        run: |
-          yamllint .
-          ansible-lint .
-
-  molecule:
+  
+  test:
     name: Molecule
     runs-on: ubuntu-latest
     strategy:
