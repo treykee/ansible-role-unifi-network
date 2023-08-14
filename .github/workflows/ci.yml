@@ -11,8 +11,7 @@ defaults:
   run:
     working-directory: "treykee.unifi_network_application"
 
-jobs:
-  
+jobs:  
   test:
     name: Molecule test
     runs-on: ubuntu-latest
@@ -45,7 +44,7 @@ jobs:
           python3 -m pip install ansible molecule molecule-plugins[podman] yamllint ansible-lint jmespath
 
       - name: Run Molecule tests.
-        run: molecule test -s pipeline
+        run: molecule test -s pipeline -- -vvv
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"
