@@ -33,6 +33,7 @@
     remote_src: true
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
+  become: true
 
 - name: Copy systemd startup script
   when: ansible_service_mgr == "systemd" and unifi_service_status is false
