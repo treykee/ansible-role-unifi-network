@@ -14,7 +14,7 @@ defaults:
 jobs:
   
   test:
-    name: Molecule
+    name: Molecule test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: ${{ !contains(github.event_name, 'pull_request') }}
@@ -34,10 +34,15 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Install test dependencies.
+      - name: Install test package dependencies.
+        run: |
+          sudo apt-get update
+          sudo apt-get install unzip
+
+      - name: Install test Python dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule[podman] molecule-plugins[podman] yamllint ansible-lint jmespath
+          python3 -m pip install ansible molecule molecule-plugins[podman] yamllint ansible-lint jmespath
 
       - name: Run Molecule tests.
         run: molecule test -s pipeline
