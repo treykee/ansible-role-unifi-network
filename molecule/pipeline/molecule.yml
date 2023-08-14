@@ -18,6 +18,7 @@ platforms:
     capabilities:
       - SYS_ADMIN
     command: "/usr/sbin/init"
+    priveleged: true
     pre_build_image: true
   - name: alpine3
     image: alpine:3.15.0
