@@ -5,7 +5,7 @@ unifi_create_user: true
 unifi_user: ubnt
 unifi_group: "{{ unifi_user }}"
 
-unifi_version: 6.5.55
+unifi_version: 7.2.97
 unifi_java_version: 1.8.0
 unifi_src_url: "http://dl.ubnt.com/unifi/{{ unifi_version }}/UniFi.unix.zip"
 unifi_install_real_path: /opt/unifi-{{ unifi_version }}
