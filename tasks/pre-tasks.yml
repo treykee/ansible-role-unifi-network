@@ -16,6 +16,8 @@
     state: absent
 
 - name: Create temp working directory
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.tempfile:
     state: directory
     suffix: "-unifi"
@@ -27,6 +29,8 @@
     verbosity: 3
 
 - name: Fetch and unarchive UniFi Network application source
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.unarchive:
     src: "{{ unifi_src_url }}"
     dest: "{{ _temp_dir.path }}"
