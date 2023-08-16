@@ -28,6 +28,6 @@ provisioner:
     #destroy: ../resources/playbooks/destroy.yml
     converge: ../resources/playbooks/converge.yml
     #prepare: ../resources/playbooks/prepare.yml
+    verify: ../resources/playbooks/verify.yml
 verifier:
   name: ansible
-  directory: ../resources/playbooks/verify.yml
