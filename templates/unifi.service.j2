@@ -1,0 +1,20 @@
+#
+# Systemd unit file for UniFi Network application
+#
+
+[Unit]
+Description=UniFi Network
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User="{{ unifi_user }}"
+Group="{{ unifi_group }}"
+WorkingDirectory="{{ unifi_install_vanity_path }}"
+ExecStart=/usr/bin/java -Xmx1024M -jar "{{ unifi_install_vanity_path }}/lib/ace.jar" start
+ExecStop=/usr/bin/java -jar "{{ unifi_install_vanity_path }}/lib/ace.jar" stop
+SuccessExitStatus=143
+
+
+[Install]
+WantedBy=multi-user.target

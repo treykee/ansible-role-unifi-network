@@ -17,7 +17,7 @@
 server
 {
 	listen 80;
-	server_name unifi.keenon.us;
+	server_name "{{ unifi_fqdn }}";
 	return 301 https://{{ unifi_fqdn }}$request_uri;
 }
 
