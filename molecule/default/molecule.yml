@@ -3,7 +3,7 @@ dependency:
   name: galaxy
   enabled: false
 driver:
-  name: delegated
+  name: podman
 platforms:
   - name: shim
 provisioner:
