@@ -4,8 +4,6 @@
     - molecule-idempotence-notest
   when:
     - ansible_service_mgr == "systemd"
-    - ansible_facts.services['unifi.service']
-    - ansible_facts.services['unifi.service'].state != "running" or ansible_facts.services['unifi.service'].status != "enabled"
   ansible.builtin.systemd:
     name: unifi.service
     enabled: true
