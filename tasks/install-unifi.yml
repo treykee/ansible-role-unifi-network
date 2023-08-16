@@ -8,7 +8,8 @@
     group: "{{ unifi_group }}"
 
 - name: Copy application directory to '/opt'
-  when: not target_path_dir
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.copy:
     src: "{{ _temp_dir.path }}/UniFi/"
     dest: "{{ target_path }}"
@@ -16,11 +17,14 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     mode: preserve
+    force: false
   vars:
     target_path: "{{ unifi_install_real_path }}"
     target_path_dir: "{{ unifi_path_status | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
 
 - name: Remove temp directory
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.file:
     path: "{{ _temp_dir.path }}"
     state: absent

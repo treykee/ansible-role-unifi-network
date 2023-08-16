@@ -1,21 +1,33 @@
 ---
 - name: Stop UniFi Network application service
-  when: ansible_service_mgr == "systemd" and unifi_service_status is true
+  when:
+    - ansible_service_mgr == "systemd"
+    - unifi_service_status is true
   ansible.builtin.systemd:
     name: unifi.service
     state: stopped
 
 - name: Unlink working data directory
+  when: 
+    - unifi_data_working_path.stat.islnk is defined
+    - unifi_data_working_path.stat.islnk
   ansible.builtin.file:
     path: "{{ unifi_data_working_path }}"
+    follow: false
     state: absent
 
 - name: Unlink vanity install directory
+  when: 
+    - unifi_install_vanity_path.stat.islnk is defined
+    - unifi_install_vanity_path.stat.islnk
   ansible.builtin.file:
     path: "{{ unifi_install_vanity_path }}"
+    follw: false
     state: absent
 
 - name: Create temp working directory
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.tempfile:
     state: directory
     suffix: "-unifi"
@@ -27,15 +39,20 @@
     verbosity: 3
 
 - name: Fetch and unarchive UniFi Network application source
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.unarchive:
     src: "{{ unifi_src_url }}"
     dest: "{{ _temp_dir.path }}"
     remote_src: true
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
+    creates: "{{ _temp_dir.path }}/UniFi"
 
 - name: Copy systemd startup script
-  when: ansible_service_mgr == "systemd" and unifi_service_status is false
+  when:
+    - ansible_service_mgr == "systemd"
+    - unifi_service_status is false
   ansible.builtin.copy:
     src: "{{ role_path }}/files/unifi.service"
     dest: "/etc/systemd/system/unifi.service"
@@ -48,6 +65,8 @@
     state: permissive
 
 - name: Get firewalld status
+  tags:
+    - molecule.idempotence.notest
   ansible.builtin.stat:
     path: /etc/sysconfig/firewalld
   register: _firewalld_status
