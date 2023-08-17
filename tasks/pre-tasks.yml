@@ -1,5 +1,5 @@
 ---
-- name: Stop UniFi Network application service
+- name: Stop UniFi service
   when:
     - ansible_service_mgr == "systemd"
     - unifi_service_status is true
@@ -38,7 +38,7 @@
     var: _temp_dir
     verbosity: 3
 
-- name: Fetch and unarchive UniFi Network application source
+- name: Get and unarchive UniFi Network application source
   tags:
     - molecule-idempotence-notest
   ansible.builtin.unarchive:

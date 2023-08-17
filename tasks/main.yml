@@ -8,7 +8,7 @@
         - vars
       skip: true
 
-- name: Include OS specific setup tasks
+- name: Include OS specific installation tasks
   ansible.builtin.include_tasks: "{{ item }}"
   with_first_found:
     - files:
@@ -26,7 +26,7 @@
 - name: Include pre-tasks
   ansible.builtin.include_tasks: "pre-tasks.yml"
 
-- name: Include UniFi Network application deploy tasks
+- name: Include UniFi Network application installation tasks
   ansible.builtin.include_tasks: "install-unifi.yml"
 
 - name: Include UniFi Network application firewalld tasks

@@ -22,14 +22,7 @@
     target_path: "{{ unifi_install_real_path }}"
     target_path_dir: "{{ unifi_path_status | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
 
-- name: Remove temp directory
-  tags:
-    - molecule-idempotence-notest
-  ansible.builtin.file:
-    path: "{{ _temp_dir.path }}"
-    state: absent
-
-- name: Symlink versioned install path to vanity path
+- name: Link versioned install path to vanity path
   ansible.builtin.file:
     src: "{{ unifi_install_real_path }}"
     dest: "{{ unifi_install_vanity_path }}"
@@ -37,7 +30,7 @@
     group: "{{ unifi_group }}"
     state: link
 
-- name: Symlink data directory to install data path
+- name: Link data directory to install data path
   ansible.builtin.file:
     src: "{{ unifi_data_real_path }}"
     dest: "{{ unifi_data_working_path }}"

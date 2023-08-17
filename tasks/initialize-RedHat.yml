@@ -1,5 +1,5 @@
 ---
-- name: Install EPEL repository
+- name: Add EPEL yum repository
   ansible.builtin.yum:
     disable_gpg_check: true
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
