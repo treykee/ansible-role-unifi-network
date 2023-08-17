@@ -48,14 +48,17 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     creates: "{{ _temp_dir.path }}/UniFi"
+  no_log: true
 
-- name: Copy systemd startup script
+- name: Template systemd unit file
   when:
     - ansible_service_mgr == "systemd"
     - unifi_service_status is false
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/unifi.service"
-    dest: "/etc/systemd/system/unifi.service"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/unifi.service.j2"
+    dest: /usr/local/lib/systemd/system/unifi.service
+    owner: "{{ unifi_user }}"
+    group: "{{ unifi_group }}"
     mode: 0744
 
 - name: Set SELinux to permissive mode
