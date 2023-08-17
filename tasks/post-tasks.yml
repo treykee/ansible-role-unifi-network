@@ -8,3 +8,10 @@
     name: unifi.service
     enabled: true
     state: started
+
+- name: Remove temp directory
+  tags:
+    - molecule-idempotence-notest
+  ansible.builtin.file:
+    path: "{{ _temp_dir.path }}"
+    state: absent
