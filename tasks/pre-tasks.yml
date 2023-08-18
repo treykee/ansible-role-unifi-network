@@ -48,7 +48,6 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     creates: "{{ _temp_dir.path }}/UniFi"
-  no_log: true
 
 - name: Template systemd unit file
   when:
@@ -56,10 +55,10 @@
     - unifi_service_status is false
   ansible.builtin.template:
     src: "{{ role_path }}/templates/unifi.service.j2"
-    dest: /usr/local/lib/systemd/system/unifi.service
+    dest: /usr/lib/systemd/system/unifi.service
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
-    mode: 0744
+    mode: '0644'
 
 - name: Set SELinux to permissive mode
   when: ansible_selinux.status == "enabled"
