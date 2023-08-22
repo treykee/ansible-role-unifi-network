@@ -45,8 +45,8 @@
     src: "{{ unifi_src_url }}"
     dest: "{{ _temp_dir.path }}"
     remote_src: true
-    owner: "{{ unifi_user }}"
-    group: "{{ unifi_group }}"
+    #owner: "{{ unifi_user }}"
+    #group: "{{ unifi_group }}"
     creates: "{{ _temp_dir.path }}/UniFi"
 
 - name: Template systemd unit file
