@@ -29,6 +29,7 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     state: link
+    follow: false
 
 - name: Link data directory to install data path
   ansible.builtin.file:
@@ -37,3 +38,4 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     state: link
+    follow: false
