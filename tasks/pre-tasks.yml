@@ -30,7 +30,7 @@
     - molecule-idempotence-notest
   ansible.builtin.tempfile:
     state: directory
-    suffix: "-unifi"
+    suffix: unifi
   register: _temp_dir
 
 - name: Debug '_temp_dir'
