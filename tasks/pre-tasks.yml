@@ -1,5 +1,7 @@
 ---
 - name: Stop UniFi service
+  tags:
+    - molecule-idempotence-notest
   when:
     - ansible_service_mgr == "systemd"
     - unifi_service_status is true
