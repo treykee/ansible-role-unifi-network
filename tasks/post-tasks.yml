@@ -9,9 +9,24 @@
     enabled: true
     state: started
 
+- name: Start UniFi Network application without init system
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - ansible_service_mgr != "systemd"
+  ansible.builtin.shell:
+    executable: /bin/bash
+    cmd: nohup /usr/bin/java -Xmx1024M -jar {{ unifi_install_vanity_path }}/lib/ace.jar start > nohup.out 2>&1 &
+    chdir: "{{ unifi_install_vanity_path }}"
+    creates: "{{ unifi_install_vanity_path }}/nohup.out"
+  become: true
+  become_user: "{{ unifi_user }}"
+  become_method: su
+
 - name: Remove temp directory
   tags:
     - molecule-idempotence-notest
+  when: _temp_dir.path is defined
   ansible.builtin.file:
     path: "{{ _temp_dir.path }}"
     state: absent
