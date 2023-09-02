@@ -29,22 +29,17 @@ jobs:
           path: "treykee.unifi_network_application"
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
-
-      - name: Install test package dependencies.
-        run: |
-          sudo apt-get update
-          sudo apt-get install unzip
+          python-version: "3.10"
 
       - name: Install test Python dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install ansible molecule molecule-plugins[podman] yamllint ansible-lint jmespath
+          python3 -m pip install -r venv/requirements.txt
 
       - name: Run Molecule tests.
-        run: molecule test -s pipeline -- -vvv
+        run: molecule test -s pipeline
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"
