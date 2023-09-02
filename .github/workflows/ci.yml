@@ -20,7 +20,7 @@ jobs:
       matrix:
         platforms:
           - rhel8
-          - alpine3
+          #- alpine3
 
     steps:
       - name: Check out codebase.
