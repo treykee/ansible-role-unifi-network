@@ -10,7 +10,7 @@
     state: stopped
 
 - name: Unlink working data directory
-  when: 
+  when:
     - unifi_data_working_path.stat.islnk is defined
     - unifi_data_working_path.stat.islnk
   ansible.builtin.file:
@@ -19,7 +19,7 @@
     state: absent
 
 - name: Unlink vanity install directory
-  when: 
+  when:
     - unifi_install_vanity_path.stat.islnk is defined
     - unifi_install_vanity_path.stat.islnk
   ansible.builtin.file:
@@ -32,7 +32,7 @@
     - molecule-idempotence-notest
   ansible.builtin.tempfile:
     state: directory
-    suffix: unifi
+    prefix: unifi
   register: _temp_dir
 
 - name: Debug '_temp_dir'
@@ -40,15 +40,19 @@
     var: _temp_dir
     verbosity: 3
 
-- name: Get and unarchive UniFi Network application source
+- name: Get UniFi Network application archive
   tags:
     - molecule-idempotence-notest
-  ansible.builtin.unarchive:
-    src: "{{ unifi_src_url }}"
-    dest: "{{ _temp_dir.path }}"
-    remote_src: true
-    #owner: "{{ unifi_user }}"
-    #group: "{{ unifi_group }}"
+  ansible.builtin.get_url:
+    url: "{{ unifi_package_url }}"
+    dest: /tmp
+    force: true
+    timeout: 60
+  register: _unifi_package
+
+- name: Unzip UniFi Network application archive   # noqa: command-instead-of-module (unarchive module failed spectacularly on GitHub runner)
+  ansible.builtin.command:
+    cmd: unzip "{{ _unifi_package.dest }}" -d "{{ _temp_dir.path }}"
     creates: "{{ _temp_dir.path }}/UniFi"
 
 - name: Template systemd unit file
