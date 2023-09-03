@@ -1,6 +1,0 @@
----
-- name: Converge
-  hosts: all
-
-  roles:
-    - treykee.unifi_network_application
