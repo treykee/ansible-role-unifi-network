@@ -55,7 +55,7 @@
     - _unifi_package.dest is defined
     - _temp_dir.path is defined
   ansible.builtin.command:
-    cmd: unzip -qq "{{ _unifi_package.dest }}" -d "{{ _temp_dir.path }}"
+    cmd: unzip -qq "{{ _unifi_package.dest }}" -d "{{ _temp_dir.path }}/"
     creates: "{{ _temp_dir.path }}/UniFi"
 
 - name: Template systemd unit file
