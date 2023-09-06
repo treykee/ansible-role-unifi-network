@@ -59,6 +59,8 @@
     dest: "{{ _temp_dir.path }}/"
     remote_src: true
     unsafe_writes: true
+    extra_opts:
+      - -qq
 
 - name: Template systemd unit file
   when:
