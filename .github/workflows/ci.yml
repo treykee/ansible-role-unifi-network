@@ -14,7 +14,7 @@ defaults:
 jobs:
   test:
     name: Molecule test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: ${{ !contains(github.event_name, 'pull_request') }}
       matrix:
