@@ -55,8 +55,6 @@
     verbosity: 3
 
 - name: Get and unarchive UniFi Network application package
-  tags:
-    - molecule-idempotence-notest
   when:
     - unifi_package_url is defined
     - _temp_dir is defined
@@ -67,6 +65,7 @@
     unsafe_writes: true
     extra_opts:
       - -qq
+    creates: "{{ _temp_dir.path }}/UniFi"
 
 - name: Template systemd unit file
   when:
