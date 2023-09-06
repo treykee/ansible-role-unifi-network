@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - ansible-role-unifi-network
+    - treykee.unifi_network_application

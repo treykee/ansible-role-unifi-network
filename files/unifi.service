@@ -1,14 +1,15 @@
 #
-# Systemd unit file for UniFi Network Application
+# Systemd unit file for UniFi Network application
 #
 
 [Unit]
-Description=UniFi Network Application
+Description=UniFi Network
 After=syslog.target network.target
 
 [Service]
 Type=simple
 User=ubnt
+Group=ubnt
 WorkingDirectory=/opt/UniFi
 ExecStart=/usr/bin/java -Xmx1024M -jar /opt/UniFi/lib/ace.jar start
 ExecStop=/usr/bin/java -jar /opt/UniFi/lib/ace.jar stop

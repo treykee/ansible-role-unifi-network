@@ -5,12 +5,14 @@ unifi_create_user: true
 unifi_user: ubnt
 unifi_group: "{{ unifi_user }}"
 
-unifi_na_version: 6.5.55
-unifi_na_java_version: 1.8.0
-unifi_na_src_url: http://dl.ubnt.com/unifi/{{ unifi_na_version }}/UniFi.unix.zip
-unifi_na_install_path: /opt/unifi-{{ unifi_na_version }}
-unifi_na_data_path: /var/opt/UniFi/data
-unifi_na_vanity_install_path: /opt/UniFi
-unifi_na_working_data_path: "{{ unifi_na_install_path }}/data"
+unifi_version: 7.2.97
+unifi_java_version: 1.8.0
+unifi_package_url: "http://dl.ubnt.com/unifi/{{ unifi_version }}/UniFi.unix.zip"
+unifi_install_real_path: /opt/unifi-{{ unifi_version }}
+unifi_install_vanity_path: /opt/unifi
+unifi_data_real_path: /var/opt/unifi/data
+unifi_data_working_path: "{{ unifi_install_real_path }}/data"
+unifi_fqdn: "unifi.example.com"
 
-mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-4.4.asc
+mongodb_version: 4.4
+mongodb_pgp_key_url: "https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc"

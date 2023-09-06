@@ -1,0 +1,46 @@
+---
+name: CI
+on:   # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: "treykee.unifi_network_application"
+
+jobs:
+  test:
+    name: Molecule test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: ${{ !contains(github.event_name, 'pull_request') }}
+      matrix:
+        platforms:
+          - rhel8
+          - alpine3
+
+    steps:
+      - name: Check out codebase.
+        uses: actions/checkout@v3
+        with:
+          path: "treykee.unifi_network_application"
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install test Python dependencies.
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r venv/requirements.txt
+
+      - name: Run Molecule tests.
+        run: molecule test -s pipeline
+        env:
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
+          MOLECULE_PLATFORM_NAME: ${{ matrix.platforms }}

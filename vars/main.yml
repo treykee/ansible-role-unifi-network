@@ -1,0 +1,38 @@
+---
+unifi_ports:
+  - port_number: 3478
+    protocol: udp
+    usage: "Port used for STUN."
+    optional: false
+  - port_number: 5514
+    protocol: udp
+    usage: "Port used for remote syslog capture."
+    optional: true
+  - port_number: 8080
+    protocol: tcp
+    usage: "Port used for device and application communication."
+    optional: false
+  - port_number: 8443
+    protocol: tcp
+    usage: "Port used for application GUI/API as seen in a web browser."
+    optional: false
+  - port_number: 8880
+    protocol: tcp
+    usage: "Port used for HTTP portal redirection."
+    optional: true
+  - port_number: 8843
+    protocol: tcp
+    usage: "Port used for HTTPS portal redirection."
+    optional: true
+  - port_number: 6789
+    protocol: tcp
+    usage: "Port used for UniFi mobile speed test."
+    optional: true
+  - port_number: 10001
+    protocol: udp
+    usage: "Port used for device discovery."
+    optional: false
+  - port_number: 1900
+    protocol: udp
+    usage: "Port used for 'Make application discoverable on L2 network' in the UniFi Network settings."
+    optional: true

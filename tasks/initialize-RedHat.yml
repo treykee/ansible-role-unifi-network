@@ -1,5 +1,5 @@
 ---
-- name: Install EPEL repository
+- name: Add EPEL yum repository
   ansible.builtin.yum:
     disable_gpg_check: true
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
@@ -7,9 +7,9 @@
 
 - name: Add MongoDB yum repository
   ansible.builtin.yum_repository:
-    name: mongodb-org-4.4
+    name: "mongodb-org-{{ mongodb_version }}"
     description: MongoDB Repository
-    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/x86_64/"
+    baseurl: "https://repo.mongodb.org/yum/redhat/{{ ansible_distribution_major_version }}/mongodb-org/{{ mongodb_version }}/{{ ansible_architecture }}/"
     gpgcheck: true
     enabled: true
     gpgkey: "{{ mongodb_pgp_key_url }}"

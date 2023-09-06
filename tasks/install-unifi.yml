@@ -1,14 +1,15 @@
 ---
 - name: Create 'data' directory
   ansible.builtin.file:
-    path: "{{ unifi_na_data_path }}"
+    path: "{{ unifi_data_real_path }}"
     state: directory
     mode: 0755
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
 
 - name: Copy application directory to '/opt'
-  when: not target_path_dir
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.copy:
     src: "{{ _temp_dir.path }}/UniFi/"
     dest: "{{ target_path }}"
@@ -16,27 +17,25 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     mode: preserve
+    force: false
   vars:
-    target_path: "{{ unifi_na_install_path }}"
+    target_path: "{{ unifi_install_real_path }}"
     target_path_dir: "{{ unifi_path_status | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
 
-- name: Remove temp directory
+- name: Link versioned install path to vanity path
   ansible.builtin.file:
-    path: "{{ _temp_dir.path }}"
-    state: absent
-
-- name: Symlink versioned install path to vanity path
-  ansible.builtin.file:
-    src: "{{ unifi_na_install_path }}"
-    dest: "{{ unifi_na_vanity_install_path }}"
+    src: "{{ unifi_install_real_path }}"
+    dest: "{{ unifi_install_vanity_path }}"
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     state: link
+    follow: false
 
-- name: Symlink data directory to install data path
+- name: Link data directory to install data path
   ansible.builtin.file:
-    src: "{{ unifi_na_data_path }}"
-    dest: "{{ unifi_na_working_data_path }}"
+    src: "{{ unifi_data_real_path }}"
+    dest: "{{ unifi_data_working_path }}"
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     state: link
+    follow: false

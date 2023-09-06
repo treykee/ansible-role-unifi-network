@@ -3,12 +3,12 @@
 # define 'target_state' var at the play level as one of 'started', 'stopped', 'restarted', or 'reloaded'
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html for more info
 
-- name: update firewalld
+- name: Update firewalld
   ansible.builtin.systemd:
     name: firewalld
     state: "{{ target_state | default(restarted) }}"
 
-- name: update unifi network application
+- name: Update UniFi network application
   ansible.builtin.systemd:
     name: unifi
     state: "{{ target_state | default(restarted) }}"

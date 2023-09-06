@@ -1,6 +1,6 @@
-# Ansible Role: UniFi Network Application
+# Ansible Role: UniFi Network
 
-Installs Ubiquiti UniFi Network Application software on RHEL/CentOS Debian/Ubuntu.
+Installs Ubiquiti UniFi Network application on RHEL and Debian based distributions.
 
 ## Requirements
 
@@ -11,16 +11,16 @@ None.
 Available variables are listed below. For default values see `defaults/main.yml`:
 
 ```yaml
-unifi_na_version: ""
+unifi_version: ""
 ```
 
-Set the version of the UniFi Network Application to be installed.
+Set the version of the UniFi Network application to be installed.
 
 ```yaml
-unifi_na_java_version: ""
+unifi_java_version: ""
 ```
 
-Set the version of Java required to support the version of the UniFi Network Application specificed.
+Set the version of Java required to support the version of the UniFi Network application specificed.
 **Note**: This should only be changed when the version of Java specified in the role defaults no longer meets the package requirements.
 
 ## Dependencies
@@ -32,7 +32,7 @@ None
 ```yaml
 - hosts: servers
   roles:
-    - treykee.ansible-role-unifi-network_application
+    - treykee.unifi_network
 ```
 
 ## License

@@ -1,0 +1,11 @@
+---
+- name: Assert 'unifi_group'
+  ansible.builtin.group:
+    name: "{{ unifi_group }}"
+    state: present
+
+- name: Assert 'unifi_user'
+  ansible.builtin.user:
+    name: "{{ unifi_user }}"
+    group: "{{ unifi_group }}"
+    state: present

@@ -1,5 +1,5 @@
 ---
-- name: Resolve UniFi Network Application install state
+- name: Resolve UniFi Network application install state
   block:
     - name: Populate service facts
       ansible.builtin.service_facts:
@@ -19,21 +19,23 @@
         var: unifi_service_status
         verbosity: 3
 
-    - name: Check if UniFi Network Application is installed already.
+    - name: Resolve UniFi Network application installation
       ansible.builtin.stat:
         path: "{{ path }}"
       loop:
-        - "{{ unifi_na_install_path }}"
-        - "{{ unifi_na_data_path }}"
-        - "{{ unifi_na_vanity_install_path }}"
-        - "{{ unifi_na_working_data_path }}"
+        - "{{ unifi_install_real_path }}"
+        - "{{ unifi_data_real_path }}"
+        - "{{ unifi_install_vanity_path }}"
+        - "{{ unifi_data_working_path }}"
       loop_control:
         loop_var: path
       register: _unifi_path_status
 
-    - name: Set 'unifi_path_status' variable containing UniFi Network Application path stat output
+    - name: Set 'unifi_path_status'
       ansible.builtin.set_fact:
-        unifi_path_status: "{{ _unifi_path_status.results | json_query('[*].{path: path, stat: stat}') }}"
+        unifi_path_status: "{{ _unifi_path_status.results | community.general.json_query(unifi_path_status_query) }}"
+      vars:
+        unifi_path_status_query: "[*].{path: path, stat: stat}"
 
     - name: Debug 'unifi_path_status'
       ansible.builtin.debug:

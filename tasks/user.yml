@@ -1,9 +1,0 @@
----
-- name: Ensure unifi_group exists.
-  group: "name={{ unifi_group }} state=present"
-
-- name: Ensure unifi_user exists.
-  user:
-    name: "{{ unifi_user }}"
-    state: present
-    group: "{{ unifi_group }}"

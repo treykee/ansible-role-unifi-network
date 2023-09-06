@@ -1,40 +1,73 @@
 ---
-- name: Stop UniFi Network Application service
-  when: ansible_service_mgr == "systemd" and unifi_service_status is true
+- name: Stop UniFi service
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - ansible_service_mgr == "systemd"
+    - unifi_service_status is true
   ansible.builtin.systemd:
     name: unifi.service
     state: stopped
 
 - name: Unlink working data directory
+  when:
+    - unifi_data_working_path.stat.islnk is defined
+    - unifi_data_working_path.stat.islnk
   ansible.builtin.file:
-    path: "{{ unifi_na_working_data_path }}"
+    path: "{{ unifi_data_working_path }}"
+    follow: false
     state: absent
 
 - name: Unlink vanity install directory
+  when:
+    - unifi_install_vanity_path.stat.islnk is defined
+    - unifi_install_vanity_path.stat.islnk
   ansible.builtin.file:
-    path: "{{ unifi_na_vanity_install_path }}"
+    path: "{{ unifi_install_vanity_path }}"
+    follw: false
     state: absent
 
 - name: Create temp working directory
+  tags:
+    - molecule-idempotence-notest
   ansible.builtin.tempfile:
     state: directory
-    suffix: "-unifi"
+    prefix: unifi
   register: _temp_dir
 
-- name: Fetch and unarchive UniFi Network Application source
-  ansible.builtin.unarchive:
-    src: "{{ unifi_na_src_url }}"
-    dest: "{{ _temp_dir.path }}"
-    remote_src: true
+- name: Debug '_temp_dir'
+  ansible.builtin.debug:
+    var: _temp_dir
+    verbosity: 3
+
+- name: Get UniFi Network application archive
+  tags:
+    - molecule-idempotence-notest
+  ansible.builtin.get_url:
+    url: "{{ unifi_package_url }}"
+    dest: /tmp
+    force: true
+    timeout: 60
+  register: _unifi_package
+
+- name: Unzip UniFi Network application archive   # noqa: command-instead-of-module (unarchive module failed spectacularly on GitHub runner)
+  when:
+    - _unifi_package.dest is defined
+    - _temp_dir.path is defined
+  ansible.builtin.command:
+    cmd: unzip -qq "{{ _unifi_package.dest }}" -d "{{ _temp_dir.path }}/"
+    creates: "{{ _temp_dir.path }}/UniFi"
+
+- name: Template systemd unit file
+  when:
+    - ansible_service_mgr == "systemd"
+    - unifi_service_status is false
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/unifi.service.j2"
+    dest: /usr/lib/systemd/system/unifi.service
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
-
-- name: Copy systemd startup script
-  when: ansible_service_mgr == "systemd" and unifi_service_status is false
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/unifi.service"
-    dest: "/etc/systemd/system/unifi.service"
-    mode: 0744
+    mode: '0644'
 
 - name: Set SELinux to permissive mode
   when: ansible_selinux.status == "enabled"
@@ -43,6 +76,8 @@
     state: permissive
 
 - name: Get firewalld status
+  tags:
+    - molecule.idempotence.notest
   ansible.builtin.stat:
     path: /etc/sysconfig/firewalld
   register: _firewalld_status
