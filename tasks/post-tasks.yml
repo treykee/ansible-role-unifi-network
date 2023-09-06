@@ -30,3 +30,4 @@
   ansible.builtin.file:
     path: "{{ _temp_dir.path }}"
     state: absent
+    unsafe_writes: true
