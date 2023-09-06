@@ -43,6 +43,7 @@
 - name: Create temp working directory
   tags:
     - molecule-idempotence-notest
+  when: _temp_dir is not defined
   ansible.builtin.tempfile:
     state: directory
     prefix: unifi
@@ -54,6 +55,11 @@
     verbosity: 3
 
 - name: Get and unarchive UniFi Network application package
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - unifi_package_url is defined
+    - _temp_dir is defined
   ansible.builtin.unarchive:
     src: "{{ unifi_package_url }}"
     dest: "{{ _temp_dir.path }}/"
