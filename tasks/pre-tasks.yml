@@ -37,7 +37,7 @@
     - unifi_install_vanity_path.stat.islnk
   ansible.builtin.file:
     path: "{{ unifi_install_vanity_path }}"
-    follw: false
+    follow: false
     state: absent
 
 - name: Create temp working directory
