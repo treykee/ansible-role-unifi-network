@@ -1,4 +1,11 @@
 ---
+- name: Install 'gnupg' to allow public key to be imported for APT
+  ansible.builtin.apt:
+    name: gnupg
+    state: present
+    update_cache: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Import the public key used by the package management system
   ansible.builtin.apt_key:
     url: "{{ mongodb_pgp_key_url }}"
@@ -14,4 +21,5 @@
   ansible.builtin.apt:
     name: "{{ debian_packages }}"
     state: present
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
