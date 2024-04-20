@@ -9,7 +9,7 @@ on:   # yamllint disable-line rule:truthy
 
 defaults:
   run:
-    working-directory: "treykee.unifi_network_application"
+    working-directory: "treykee.unifi-network-application"
 
 jobs:
   test:
@@ -21,6 +21,8 @@ jobs:
         platforms:
           - rhel8
           - alpine3
+          - debian10
+          - ubuntu20
 
     steps:
       - name: Check out codebase.
