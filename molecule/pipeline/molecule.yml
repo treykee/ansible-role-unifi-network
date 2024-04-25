@@ -23,7 +23,9 @@ platforms:
   - name: alpine3
     image: alpine:3.18.0
   - name: debian10
-    image: debian:buster
+    image: debian:10
+  - name: ubuntu20
+    image: ubuntu:20.04
 provisioner:
   name: ansible
   playbooks:
