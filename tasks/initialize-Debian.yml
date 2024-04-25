@@ -9,11 +9,12 @@
 - name: Import the public key used by the package management system
   ansible.builtin.apt_key:
     url: "{{ mongodb_pgp_key_url }}"
+    keyring: /usr/share/keyrings/mongodb-server-{{ mongodb_version }}.gpg
     state: present
 
 - name: Add MongoDB apt repository
   ansible.builtin.apt_repository:
-    repo: deb https://repo.mongodb.org/apt/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }}/mongodb-org/{{ mongodb_version }} multiverse
+    repo: deb [ signed-by=/usr/share/keyrings/mongodb-server-{{ mongodb_version }}.gpg ] https://repo.mongodb.org/apt/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }}/mongodb-org/{{ mongodb_version }} {{ (ansible_distribution == 'Debian') | ternary('main', 'multiverse') }}
     state: present
     filename: mongodb-org-{{ mongodb_version }}
 
