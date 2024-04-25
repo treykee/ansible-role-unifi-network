@@ -2,5 +2,6 @@
 debian_packages:
   - gnupg
   - curl
+  - unzip
   - mongodb-org
   - openjdk-8-jdk-headless
