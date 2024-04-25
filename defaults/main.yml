@@ -15,4 +15,4 @@ unifi_data_working_path: "{{ unifi_install_real_path }}/data"
 unifi_fqdn: "unifi.example.com"
 
 mongodb_version: 4.4
-mongodb_pgp_key_url: "https://pgp.mongodb.com/server-{{ mongodb_version }}.asc"
+mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
