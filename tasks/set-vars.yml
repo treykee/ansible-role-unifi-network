@@ -1,0 +1,28 @@
+---
+- name: Set Java and MongoDB versions for UniFi Server v8.1.x and later
+  ansible.builtin.set_fact:
+    unifi_java_version: 17
+    mongodb_version: 7.0
+  when: unifi_version is version('8.1', 'ge')
+
+- name: Set Java and MongoDB versions for UniFi Server v7.5.x - v8.0.x
+  ansible.builtin.set_fact:
+    unifi_java_version: 17
+    mongodb_version: 4.4
+  when: unifi_version is version('7.5', 'ge') and unifi_version is version('8.1', 'lt')
+
+- name: Set Java and MongoDB versions for UniFi Network Server v7.3.x - v7.4.x
+  ansible.builtin.set_fact:
+    unifi_java_version: 11
+    mongodb_version: 3.6
+  when: unifi_version is version('7.3', 'ge') and unifi_version is version('7.5', 'lt')
+
+- name: Set Java and MongoDB versions for UniFi Network Server v5.13.10 - v7.2.x
+  ansible.builtin.set_fact:
+    unifi_java_version: 8
+    mongodb_version: 3.6
+  when: unifi_version is version('5.13.10', 'gt') and unifi_version is version('7.3', 'lt')
+
+- name: Set MongoDB PGP key url
+  ansible.builtin.set_fact:
+    mongodb_pgp_key_url: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc

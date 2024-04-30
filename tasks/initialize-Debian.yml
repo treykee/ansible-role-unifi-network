@@ -18,6 +18,10 @@
     state: present
     filename: mongodb-org-{{ mongodb_version }}
 
+- name: Set Java package name
+  ansible.builtin.set_fact:
+    debian_packages: "{{ debian_packages + ['openjdk-{{ unifi_java_version }}-jre-headless'] }}"
+
 - name: Install prerequisite packages
   ansible.builtin.apt:
     name: "{{ debian_packages }}"

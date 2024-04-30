@@ -1,5 +1,4 @@
 ---
 alpine_packages:
   - unzip
-  - openjdk8
   - mongodb
