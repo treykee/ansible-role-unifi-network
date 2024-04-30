@@ -1,4 +1,17 @@
 ---
+- name: Set SELinux to permissive mode
+  when: ansible_selinux.status == "enabled"
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
+
+- name: Get firewalld status
+  tags:
+    - molecule.idempotence.notest
+  ansible.builtin.stat:
+    path: /etc/sysconfig/firewalld
+  register: _firewalld_status
+
 - name: Stop UniFi service
   tags:
     - molecule-idempotence-notest
@@ -24,12 +37,13 @@
     - unifi_install_vanity_path.stat.islnk
   ansible.builtin.file:
     path: "{{ unifi_install_vanity_path }}"
-    follw: false
+    follow: false
     state: absent
 
 - name: Create temp working directory
   tags:
     - molecule-idempotence-notest
+  when: _temp_dir is not defined
   ansible.builtin.tempfile:
     state: directory
     prefix: unifi
@@ -40,22 +54,17 @@
     var: _temp_dir
     verbosity: 3
 
-- name: Get UniFi Network application archive
-  tags:
-    - molecule-idempotence-notest
-  ansible.builtin.get_url:
-    url: "{{ unifi_package_url }}"
-    dest: /tmp
-    force: true
-    timeout: 60
-  register: _unifi_package
-
-- name: Unzip UniFi Network application archive   # noqa: command-instead-of-module (unarchive module failed spectacularly on GitHub runner)
+- name: Get and unarchive UniFi Network application package
   when:
-    - _unifi_package.dest is defined
-    - _temp_dir.path is defined
-  ansible.builtin.command:
-    cmd: unzip -qq "{{ _unifi_package.dest }}" -d "{{ _temp_dir.path }}/"
+    - unifi_package_url is defined
+    - _temp_dir is defined
+  ansible.builtin.unarchive:
+    src: "{{ unifi_package_url }}"
+    dest: "{{ _temp_dir.path }}/"
+    remote_src: true
+    unsafe_writes: true
+    extra_opts:
+      - -qq
     creates: "{{ _temp_dir.path }}/UniFi"
 
 - name: Template systemd unit file
@@ -68,16 +77,3 @@
     owner: "{{ unifi_user }}"
     group: "{{ unifi_group }}"
     mode: '0644'
-
-- name: Set SELinux to permissive mode
-  when: ansible_selinux.status == "enabled"
-  ansible.posix.selinux:
-    policy: targeted
-    state: permissive
-
-- name: Get firewalld status
-  tags:
-    - molecule.idempotence.notest
-  ansible.builtin.stat:
-    path: /etc/sysconfig/firewalld
-  register: _firewalld_status

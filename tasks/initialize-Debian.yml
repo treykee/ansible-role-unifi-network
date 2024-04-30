@@ -1,17 +1,30 @@
 ---
+- name: Install 'gnupg' to allow public key to be imported for APT
+  ansible.builtin.apt:
+    name: gnupg
+    state: present
+    update_cache: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Import the public key used by the package management system
   ansible.builtin.apt_key:
     url: "{{ mongodb_pgp_key_url }}"
+    keyring: /usr/share/keyrings/mongodb-server-{{ mongodb_version }}.gpg
     state: present
 
 - name: Add MongoDB apt repository
   ansible.builtin.apt_repository:
-    repo: deb https://repo.mongodb.org/apt/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }}/mongodb-org/{{ mongodb_version }} multiverse
+    repo: deb [ signed-by=/usr/share/keyrings/mongodb-server-{{ mongodb_version }}.gpg ] https://repo.mongodb.org/apt/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }}/mongodb-org/{{ mongodb_version }} {{ (ansible_distribution == 'Debian') | ternary('main', 'multiverse') }}
     state: present
     filename: mongodb-org-{{ mongodb_version }}
+
+- name: Set Java package name
+  ansible.builtin.set_fact:
+    debian_packages: "{{ debian_packages + ['openjdk-{{ unifi_java_version }}-jre-headless'] }}"
 
 - name: Install prerequisite packages
   ansible.builtin.apt:
     name: "{{ debian_packages }}"
     state: present
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"

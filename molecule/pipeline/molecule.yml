@@ -9,7 +9,8 @@ lint: |
   ansible-lint .
 platforms:
   - name: rhel8
-    image: registry.access.redhat.com/ubi8/ubi-init
+    image: ubi8/ubi-init
+    registry: registry.access.redhat.com
     tmpfs:
       - /run
       - /tmp
@@ -20,7 +21,11 @@ platforms:
     command: "/usr/sbin/init"
     pre_build_image: true
   - name: alpine3
-    image: alpine:3.18.0
+    image: alpine:3.19.1
+  - name: debian12
+    image: debian:12
+  - name: ubuntu22
+    image: ubuntu:22.04
 provisioner:
   name: ansible
   playbooks:

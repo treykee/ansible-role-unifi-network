@@ -9,6 +9,10 @@
   loop_control:
     loop_var: line
 
+- name: Set Java package name
+  ansible.builtin.set_fact:
+    alpine_packages: "{{ alpine_packages + ['openjdk{{ unifi_java_version }}-jre'] }}"
+
 - name: Install prerequisite packages
   community.general.apk:
     name: "{{ package }}"

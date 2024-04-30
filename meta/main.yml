@@ -3,7 +3,7 @@ galaxy_info:
   role_name: unifi_network_application
   namespace: treykee
   author: "Trey Keenon <treykee@gmail.com>"
-  description: Ubiquiti UniFi Network Application
+  description: Ubiquiti UniFi Network application
   company: ""
 
   license: MIT
@@ -11,9 +11,18 @@ galaxy_info:
   min_ansible_version: "2.8"
 
   platforms:
+    - name: Alpine
+      versions:
+        - all
     - name: EL
       versions:
         - "8"
+        - "9"
+    - name: Debian
+      versions:
+        - "buster"
+        - "bullseye"
+        - "bookworm"
 
   galaxy_tags:
     - networking

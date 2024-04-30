@@ -20,7 +20,6 @@
     force: false
   vars:
     target_path: "{{ unifi_install_real_path }}"
-    target_path_dir: "{{ unifi_path_status | json_query('[? path == `{{ target_path }}`].stat.exists') | join() | bool }}"
 
 - name: Link versioned install path to vanity path
   ansible.builtin.file:

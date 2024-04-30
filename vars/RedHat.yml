@@ -1,6 +1,5 @@
 ---
 redhat_packages:
   - mongodb-org-server
-  - "java-{{ unifi_java_version }}-openjdk"
   - unzip
   - wget

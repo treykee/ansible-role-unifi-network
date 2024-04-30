@@ -1,2 +1,6 @@
 ---
 debian_packages:
+  - gnupg
+  - curl
+  - unzip
+  - mongodb-org

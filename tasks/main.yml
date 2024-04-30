@@ -1,4 +1,12 @@
 ---
+- name: Fail for unsupported OS/architecture combinations
+  ansible.builtin.fail:
+    msg: "Unsupported OS/architecture combination: {{ ansible_os_family }}/{{ ansible_architecture }}"
+  when: ansible_distribution == 'Debian' and ansible_architecture in 'arm64,aarch64'
+
+- name: Set dynamic variables
+  ansible.builtin.include_tasks: "set-vars.yml"
+
 - name: Include OS specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:

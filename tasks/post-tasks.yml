@@ -21,7 +21,7 @@
     creates: "{{ unifi_install_vanity_path }}/nohup.out"
   become: true
   become_user: "{{ unifi_user }}"
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: Remove temp directory
   tags:
@@ -30,3 +30,4 @@
   ansible.builtin.file:
     path: "{{ _temp_dir.path }}"
     state: absent
+    unsafe_writes: true
