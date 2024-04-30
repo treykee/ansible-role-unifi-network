@@ -21,8 +21,8 @@ jobs:
         platforms:
           - rhel8
           - alpine3
-          - debian10
-          - ubuntu20
+          - debian12
+          - ubuntu22
 
     steps:
       - name: Check out codebase.
