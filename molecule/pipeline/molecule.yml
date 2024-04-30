@@ -21,11 +21,11 @@ platforms:
     command: "/usr/sbin/init"
     pre_build_image: true
   - name: alpine3
-    image: alpine:3.18.0
-  - name: debian10
-    image: debian:10
-  - name: ubuntu20
-    image: ubuntu:20.04
+    image: alpine:3.19.1
+  - name: debian12
+    image: debian:12
+  - name: ubuntu22
+    image: ubuntu:22.04
 provisioner:
   name: ansible
   playbooks:
