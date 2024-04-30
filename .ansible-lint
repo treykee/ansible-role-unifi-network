@@ -1,7 +1,8 @@
+---
 exclude_paths:
-  - .vscode/  
+  - .vscode/
   - .github/
 
 skip_list:
-  - 'yaml'
-  - 'role-name'
+  - yaml
+  - role-name
