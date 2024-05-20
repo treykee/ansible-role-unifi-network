@@ -11,9 +11,7 @@ platforms:
   - name: rhel8
     image: ubi8/ubi-init
     registry: registry.access.redhat.com
-    tmpfs:
-      - /run
-      - /tmp
+    systemd: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     capabilities:
