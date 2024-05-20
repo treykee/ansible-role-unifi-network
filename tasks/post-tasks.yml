@@ -15,12 +15,11 @@
   when:
     - ansible_service_mgr != "systemd"
   ansible.builtin.shell:
-    executable: /bin/bash
-    cmd: nohup /usr/bin/java -Xmx1024M -jar {{ unifi_install_vanity_path }}/lib/ace.jar start > nohup.out 2>&1 &
+    executable: /bin/sh
+    cmd: /sbin/runuser -u ubnt -- /usr/bin/nohup /usr/bin/java -Xmx1024M -jar ./lib/ace.jar start &
     chdir: "{{ unifi_install_vanity_path }}"
-    creates: "{{ unifi_install_vanity_path }}/nohup.out"
   become: true
-  become_user: "{{ unifi_user }}"
+  become_user: root
   become_method: ansible.builtin.su
 
 - name: Remove temp directory

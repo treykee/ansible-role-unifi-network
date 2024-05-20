@@ -14,15 +14,6 @@ Available variables are listed below. For default values see `defaults/main.yml`
 unifi_version: ""
 ```
 
-Set the version of the UniFi Network application to be installed.
-
-```yaml
-unifi_java_version: ""
-```
-
-Set the version of Java required to support the version of the UniFi Network application specificed.
-**Note**: This should only be changed when the version of Java specified in the role defaults no longer meets the package requirements.
-
 ## Dependencies
 
 None
@@ -32,7 +23,7 @@ None
 ```yaml
 - hosts: servers
   roles:
-    - treykee.unifi_network
+    - treykee.unifi_network_application
 ```
 
 ## License
