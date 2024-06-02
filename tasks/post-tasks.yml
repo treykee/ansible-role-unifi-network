@@ -16,10 +16,20 @@
     - ansible_service_mgr != "systemd"
   ansible.builtin.shell:
     executable: /bin/sh
-    cmd: /sbin/runuser -u ubnt -- /usr/bin/nohup /usr/bin/java -Xmx1024M -jar ./lib/ace.jar start &
+    cmd: >
+      /usr/bin/java
+      -Dfile.encoding=UTF-8
+      -Djava.awt.headless=true
+      $UNIFI_JVM_OPTS
+      --add-opens java.base/java.lang=ALL-UNNAMED
+      --add-opens java.base/java.time=ALL-UNNAMED
+      --add-opens java.base/sun.security.util=ALL-UNNAMED
+      --add-opens java.base/java.io=ALL-UNNAMED
+      --add-opens java.rmi/sun.rmi.transport=ALL-UNNAMED
+      -jar ./lib/ace.jar start &
     chdir: "{{ unifi_install_vanity_path }}"
   become: true
-  become_user: root
+  become_user: "{{ unifi_user }}"
   become_method: ansible.builtin.su
 
 - name: Remove temp directory
