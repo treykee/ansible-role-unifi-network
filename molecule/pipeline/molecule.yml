@@ -24,6 +24,8 @@ platforms:
     image: debian:12
   - name: ubuntu22
     image: ubuntu:22.04
+  - name: ubuntu24
+    image: ubuntu:24.04
 provisioner:
   name: ansible
   playbooks:
