@@ -2,8 +2,14 @@
 - name: Set Java and MongoDB versions for UniFi Server v8.1.x and later
   ansible.builtin.set_fact:
     unifi_java_version: 17
+    mongodb_version: 8.0
+  when: unifi_version is version('9.0', 'ge')
+
+- name: Set Java and MongoDB versions for UniFi Server v8.1.x and later
+  ansible.builtin.set_fact:
+    unifi_java_version: 17
     mongodb_version: 7.0
-  when: unifi_version is version('8.1', 'ge')
+  when: unifi_version is version('8.1', 'ge') and unifi_version is version('9.0', 'lt')
 
 - name: Set Java and MongoDB versions for UniFi Server v7.5.x - v8.0.x
   ansible.builtin.set_fact:
