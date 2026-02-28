@@ -1,0 +1,41 @@
+{
+  "name": "Ansible Role Development",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.ansible",
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.flake8",
+        "esbenp.prettier-vscode",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-json"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "ansible.python.interpreterPath": "/usr/local/bin/python",
+        "files.associations": {
+          "*.yml": "yaml",
+          "*.yaml": "yaml"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "pip install --user ansible ansible-lint yamllint molecule[podman] pytest-testinfra && curl -fsSL https://get.podman.io/install.sh | sh",
+  "remoteUser": "vscode",
+  "forwardPorts": [8080, 8443],
+  "portsAttributes": {
+    "8080": {
+      "label": "UniFi HTTP",
+      "onAutoForward": "notify"
+    },
+    "8443": {
+      "label": "UniFi HTTPS",
+      "onAutoForward": "notify"
+    }
+  }
+}
