@@ -3,8 +3,9 @@
 # But descend into directories
 !*/
 # These specifically belong in source
-!/.github/**
 !/defaults/**
+!/.devcontainer/**
+!/.github/**
 !/files/**
 !/handlers/**
 !/meta/**
