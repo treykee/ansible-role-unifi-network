@@ -1,5 +1,5 @@
 {
-  "name": "ansible-dev-container-codespaces",
+  "name": "ansible-dev-container-docker",
   "image": "ghcr.io/ansible/community-ansible-dev-tools:latest",
   "containerUser": "root",
   "runArgs": [
