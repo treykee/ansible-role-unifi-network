@@ -17,7 +17,7 @@
     - molecule-idempotence-notest
   when:
     - ansible_service_mgr == "systemd"
-    - unifi_service_status is true
+    - unifi_service_exists is true
   ansible.builtin.systemd:
     name: unifi.service
     state: stopped
@@ -70,7 +70,7 @@
 - name: Template systemd unit file
   when:
     - ansible_service_mgr == "systemd"
-    - unifi_service_status is false
+    - unifi_service_exists is false
   ansible.builtin.template:
     src: "{{ role_path }}/templates/unifi.service.j2"
     dest: /usr/lib/systemd/system/unifi.service
